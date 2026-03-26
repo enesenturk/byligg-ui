@@ -54,17 +54,10 @@ export function formatRelativeTime(date: Date | string, locale: Language = 'tr')
   const diffHours = Math.floor(diffMs / (1000 * 60 * 60));
   const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
 
-  if (locale === 'tr') {
-    if (diffMinutes < 1) return getDateTimeMessage('now', locale);
-    if (diffMinutes < 60) return `${diffMinutes} ${getDateTimeMessage('minutesAgo', locale)}`;
-    if (diffHours < 24) return `${diffHours} ${getDateTimeMessage('hoursAgo', locale)}`;
-    return `${diffDays} ${getDateTimeMessage('daysAgo', locale)}`;
-  } else {
-    if (diffMinutes < 1) return getDateTimeMessage('now', locale);
-    if (diffMinutes < 60) return `${diffMinutes} ${getDateTimeMessage('minutesAgo', locale)}`;
-    if (diffHours < 24) return `${diffHours} ${getDateTimeMessage('hoursAgo', locale)}`;
-    return `${diffDays} ${getDateTimeMessage('daysAgo', locale)}`;
-  }
+  if (diffMinutes < 1) return getDateTimeMessage('now', locale);
+  if (diffMinutes < 60) return `${diffMinutes} ${getDateTimeMessage('minutesAgo', locale)}`;
+  if (diffHours < 24) return `${diffHours} ${getDateTimeMessage('hoursAgo', locale)}`;
+  return `${diffDays} ${getDateTimeMessage('daysAgo', locale)}`;
 }
 
 // Hook for formatted dates
