@@ -7,7 +7,7 @@ export function handleApiError(error: unknown, lang: 'tr' | 'en' = 'tr') {
       tr: {
         400: 'Geçersiz istek',
         401: 'Oturumunuz sona erdi, lütfen tekrar giriş yapın',
-        403: 'Bu işlem için yetkiniz yok',
+        403: 'Bir hata oluştu. Lütfen daha sonra tekrar deneyiniz.',
         404: 'İstenen kaynak bulunamadı',
         500: 'Sunucu hatası, lütfen daha sonra tekrar deneyin',
         0: 'İnternet bağlantınızı kontrol edin',

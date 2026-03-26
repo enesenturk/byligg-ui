@@ -56,14 +56,40 @@ class ApiClient {
 
       if (!response.ok) {
         const errorData = (await response.json().catch(() => ({}))) as { message?: string };
-        const message = errorData.message || `HTTP ${response.status}`;
-        const error = new ApiError(response.status, message);
+
+        let message = errorData.message || `HTTP ${response.status}`;
+        const statusCode = response.status;
+
+        if (statusCode === 401 && typeof window !== 'undefined') {
+          document.cookie = 'byligg_token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT';
+          window.location.href = '/';
+          message = errorData.message || 'Oturum süreniz doldu, lütfen tekrar giriş yapın';
+        } else if (statusCode === 403) {
+          message = errorData.message || (resolvedLang === 'tr'
+            ? 'Bir hata oluştu. Lütfen daha sonra tekrar deneyiniz.'
+            : 'An error occurred. Please try again later.');
+        } else if (statusCode === 400) {
+          message = errorData.message || (resolvedLang === 'tr' ? 'Geçersiz istek' : 'Invalid request');
+        }
+
+        const error = new ApiError(statusCode, message);
         handleApiError(error, resolvedLang);
         throw error;
       }
 
-      const data = (await response.json()) as T;
-      return data;
+      const data = (await response.json()) as unknown;
+
+      if (data && typeof data === 'object') {
+        const maybePayload = data as ApiResponse;
+        if (typeof maybePayload.success === 'boolean' && !maybePayload.success) {
+          const businessMessage = maybePayload.message || maybePayload.error || (resolvedLang === 'tr' ? 'İş kuralı hatası' : 'Business rule error');
+          const businessError = new ApiError(400, businessMessage);
+          handleApiError(businessError, resolvedLang);
+          throw businessError;
+        }
+      }
+
+      return data as T;
     } catch (error) {
       if (error instanceof ApiError) {
         throw error;
