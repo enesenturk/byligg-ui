@@ -102,25 +102,58 @@
 }
 
 [data-theme="anthracite"] {
-  /* Antrasit – soft teal vurgu, ılık gri zemin */
-  --theme-accent:       #5BBFB5;
-  --theme-accent-rgb:   91,191,181;
-  --theme-accent-2:     #A594F9;
-  --theme-accent-2-rgb: 165,148,249;
-  --theme-bg-1:         #252830;
-  --theme-bg-1-rgb:     37,40,48;
-  --theme-bg-2:         #2E3240;
-  --theme-bg-card:      #363A4A;
-  --theme-bg-hover:     #3F4356;
-  --theme-bg-hero:      #252830;
-  --theme-bg-hero-rgb:  37,40,48;
-  --theme-text-1:       #F0F2FA;
-  --theme-text-2:       rgba(210,215,240,0.75);
-  --theme-text-3:       rgba(170,180,215,0.5);
-  --theme-border:       rgba(255,255,255,0.1);
-  --theme-border-subtle: rgba(255,255,255,0.07);
-  --theme-border-strong: rgba(255,255,255,0.15);
-  --theme-nav-opacity:  0.4;
+  /* Nar – Türk bayrağı kırmızısı accent, açık kırmızı tonlu arka plan */
+  --theme-accent:       #E30A17;
+  --theme-accent-rgb:   227,10,23;
+  --theme-accent-2:     #FF1A2E;
+  --theme-accent-2-rgb: 255,26,46;
+  --theme-bg-1:         #FFF8F8;
+  --theme-bg-1-rgb:     255,248,248;
+  --theme-bg-2:         #F8F0F0;
+  --theme-bg-card:      #FFFFFF;
+  --theme-bg-hover:     #F0E8E8;
+  --theme-bg-hero:      #FFF0F0;
+  --theme-bg-hero-rgb:  255,240,240;
+  --theme-text-1:       #000000;
+  --theme-text-2:       #333333;
+  --theme-text-3:       #666666;
+  --theme-border:       rgba(0,0,0,0.1);
+  --theme-border-subtle: rgba(0,0,0,0.05);
+  --theme-border-strong: rgba(0,0,0,0.15);
+  --theme-nav-opacity:  0.9;
+
+  /* shadcn/ui renklerini override et */
+  --background: #FFF8F8;
+  --foreground: #000000;
+  --card: #FFFFFF;
+  --card-foreground: #000000;
+  --popover: #FFF8F8;
+  --popover-foreground: #000000;
+  --primary: #E30A17;
+  --primary-foreground: #FFFFFF;
+  --secondary: #F8F0F0;
+  --secondary-foreground: #000000;
+  --muted: #F8F0F0;
+  --muted-foreground: #666666;
+  --accent: #E30A17;
+  --accent-foreground: #FFFFFF;
+  --destructive: #dc2626;
+  --border: rgba(0,0,0,0.1);
+  --input: #FFFFFF;
+  --ring: #E30A17;
+  --chart-1: #E30A17;
+  --chart-2: #FF1A2E;
+  --chart-3: #F8F0F0;
+  --chart-4: #666666;
+  --chart-5: #333333;
+  --sidebar: #FFF8F8;
+  --sidebar-foreground: #000000;
+  --sidebar-primary: #E30A17;
+  --sidebar-primary-foreground: #FFFFFF;
+  --sidebar-accent: #F8F0F0;
+  --sidebar-accent-foreground: #000000;
+  --sidebar-border: rgba(0,0,0,0.1);
+  --sidebar-ring: #E30A17;
 }
 
 [data-theme="linen"] {
@@ -143,6 +176,15 @@
   --theme-border-subtle: rgba(100,50,130,0.07);
   --theme-border-strong: rgba(100,50,130,0.20);
   --theme-nav-opacity:  0.92;
+}
+
+/* Hero headline overrides for light themes */
+[data-theme="ivory"] .hero-headline {
+  color: #FFFFFF !important;
+}
+
+[data-theme="linen"] .hero-headline {
+  color: #FFFFFF !important;
 }
 
 :root {

@@ -48,9 +48,9 @@ export function Hero({ onOpenRegister }: HeroProps) {
       <div style={{
         position: "absolute", inset: 0,
         background: `
-          radial-gradient(ellipse 80% 50% at 50% -20%, rgba(var(--theme-accent-rgb),0.1), transparent),
-          radial-gradient(ellipse 60% 40% at 80% 60%, rgba(var(--theme-accent-2-rgb),0.08), transparent),
-          linear-gradient(180deg, var(--theme-bg-hero) 0%, rgba(var(--theme-bg-hero-rgb),0.85) 50%, var(--theme-bg-hero) 100%)
+          radial-gradient(ellipse 80% 50% at 50% -20%, rgba(var(--theme-accent-rgb),0.15), transparent),
+          radial-gradient(ellipse 60% 40% at 80% 60%, rgba(var(--theme-accent-2-rgb),0.12), transparent),
+          linear-gradient(180deg, var(--theme-bg-hero) 0%, rgba(var(--theme-bg-hero-rgb),0.9) 50%, var(--theme-bg-hero) 100%)
         `,
         pointerEvents: "none",
       }} />
@@ -58,7 +58,7 @@ export function Hero({ onOpenRegister }: HeroProps) {
       {/* Grid */}
       <div style={{
         position: "absolute", inset: 0,
-        backgroundImage: "linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px)",
+        backgroundImage: "linear-gradient(rgba(0,0,0,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(0,0,0,0.03) 1px, transparent 1px)",
         backgroundSize: "60px 60px",
         maskImage: "radial-gradient(ellipse 80% 60% at 50% 50%, black, transparent)",
         WebkitMaskImage: "radial-gradient(ellipse 80% 60% at 50% 50%, black, transparent)",
@@ -76,18 +76,18 @@ export function Hero({ onOpenRegister }: HeroProps) {
           <LogoWordmark fontSize={96} variant="gradient" />
         </h1>
 
-        <p style={{ fontSize: "0.75rem", fontWeight: 600, letterSpacing: "0.35em", textTransform: "uppercase", color: "rgba(180,200,255,0.45)", marginBottom: "1.5rem" }}>
+        <p style={{ fontSize: "0.75rem", fontWeight: 600, letterSpacing: "0.35em", textTransform: "uppercase", color: "var(--theme-text-3)", marginBottom: "1.5rem" }}>
           {t.hero.tagline}
         </p>
 
         {/* Divider */}
-        <div style={{ width: 80, height: 1, margin: "0 auto 2rem", background: "linear-gradient(90deg, transparent, rgba(var(--theme-accent-rgb),0.5), transparent)" }} />
+        <div style={{ width: 80, height: 1, margin: "0 auto 2rem", background: "linear-gradient(90deg, transparent, var(--theme-accent), transparent)" }} />
 
         {/* Headline */}
-        <h2 style={{ fontSize: "clamp(2rem, 5vw, 3.5rem)", fontWeight: 900, color: "#fff", letterSpacing: "-0.02em", lineHeight: 1.15, marginBottom: "1.25rem" }}>
+        <h2 className="hero-headline" style={{ fontSize: "clamp(2rem, 5vw, 3.5rem)", fontWeight: 900, color: "var(--theme-text-1)", letterSpacing: "-0.02em", lineHeight: 1.15, marginBottom: "1.25rem" }}>
           <span style={{ display: "block" }}>
             {t.hero.line1}
-            <span style={{ color: "rgba(255,255,255,0.2)", margin: "0 0.5em", fontWeight: 300 }}>|</span>
+            <span style={{ color: "var(--theme-accent)", margin: "0 0.5em", fontWeight: 300 }}>|</span>
             {t.hero.line2}
           </span>
           <span style={{
@@ -99,7 +99,7 @@ export function Hero({ onOpenRegister }: HeroProps) {
           </span>
         </h2>
 
-        <p style={{ fontSize: "1.1rem", color: "rgba(180,200,255,0.65)", maxWidth: 560, margin: "0 auto 2.5rem", lineHeight: 1.7 }}>
+        <p style={{ fontSize: "1.1rem", color: "var(--theme-text-2)", maxWidth: 560, margin: "0 auto 2.5rem", lineHeight: 1.7 }}>
           {t.hero.subtitle}
         </p>
 
@@ -121,15 +121,15 @@ export function Hero({ onOpenRegister }: HeroProps) {
           </button>
           <a href="#how-it-works" style={{
             padding: "1rem 2rem", borderRadius: 100,
-            border: "1px solid rgba(255,255,255,0.15)",
-            background: "rgba(var(--theme-bg-hero-rgb),0.5)", color: "#fff",
+            border: "1px solid rgba(0,0,0,0.15)",
+            background: "rgba(255,255,255,0.5)", color: "var(--theme-text-1)",
             fontWeight: 700, fontSize: "1rem",
             textDecoration: "none", cursor: "pointer",
             backdropFilter: "blur(12px)", transition: "all 0.3s",
             display: "inline-flex", alignItems: "center", gap: 8,
           }}
-            onMouseEnter={e => { (e.currentTarget as HTMLAnchorElement).style.background = "rgba(var(--theme-bg-hero-rgb),0.75)"; }}
-            onMouseLeave={e => { (e.currentTarget as HTMLAnchorElement).style.background = "rgba(var(--theme-bg-hero-rgb),0.5)"; }}
+            onMouseEnter={e => { (e.currentTarget as HTMLAnchorElement).style.background = "rgba(255,255,255,0.75)"; }}
+            onMouseLeave={e => { (e.currentTarget as HTMLAnchorElement).style.background = "rgba(255,255,255,0.5)"; }}
           >
             📊 {t.hero.ctaSecondary}
           </a>
@@ -140,7 +140,7 @@ export function Hero({ onOpenRegister }: HeroProps) {
           display: "flex", alignItems: "center", justifyContent: "center", gap: "3rem",
           flexWrap: "wrap",
           paddingTop: "3rem",
-          borderTop: "1px solid rgba(255,255,255,0.07)",
+          borderTop: "1px solid rgba(0,0,0,0.07)",
         }}>
           {[
             { value: t.hero.stat1Value, label: t.hero.stat1Label },
@@ -155,7 +155,7 @@ export function Hero({ onOpenRegister }: HeroProps) {
               }}>
                 {s.value}
               </div>
-              <div style={{ fontSize: "0.9rem", color: "rgba(180,200,255,0.5)", marginTop: 4 }}>
+              <div style={{ fontSize: "0.9rem", color: "var(--theme-text-3)", marginTop: 4 }}>
                 {s.label}
               </div>
             </div>
@@ -166,8 +166,8 @@ export function Hero({ onOpenRegister }: HeroProps) {
       {/* Scroll indicator */}
       <div style={{ position: "absolute", bottom: 32, left: "50%", transform: "translateX(-50%)", opacity: 0.4 }}>
         <svg width="24" height="38" viewBox="0 0 24 38" fill="none">
-          <rect x="1" y="1" width="22" height="36" rx="11" stroke="white" strokeWidth="1.5" />
-          <rect x="10.5" y="7" width="3" height="8" rx="1.5" fill="white" style={{ animation: "scrollDot 1.5s ease-in-out infinite" }} />
+          <rect x="1" y="1" width="22" height="36" rx="11" stroke="var(--theme-text-1)" strokeWidth="1.5" />
+          <rect x="10.5" y="7" width="3" height="8" rx="1.5" fill="var(--theme-text-1)" style={{ animation: "scrollDot 1.5s ease-in-out infinite" }} />
         </svg>
       </div>
 

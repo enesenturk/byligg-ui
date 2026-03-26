@@ -26,10 +26,10 @@ export const THEMES: Theme[] = [
   },
   {
     id: "anthracite",
-    name: { tr: "Arduvaz", en: "Slate" },
-    accent: "#5BBFB5",
-    accentRgb: "91,191,181",
-    swatch: "from-teal-400 to-violet-400",
+    name: { tr: "Nar", en: "Garnet" },
+    accent: "#E8112D",
+    accentRgb: "232,17,45",
+    swatch: "from-red-600 to-white",
   },
   {
     id: "linen",
