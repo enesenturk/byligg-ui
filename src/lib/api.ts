@@ -1,6 +1,6 @@
 import { getCookie } from './utils';
 import { handleApiError } from './toast';
-import { Language, toLocale, parseLocale } from '@/lib/constants/language';
+import { Language, toLocale, parseLocale, getApiErrorMessage } from '@/lib/constants/language';
 
 export interface ApiResponse<T = unknown> {
   success: boolean;
@@ -63,13 +63,11 @@ class ApiClient {
         if (statusCode === 401 && typeof window !== 'undefined') {
           document.cookie = 'byligg_token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT';
           window.location.href = '/';
-          message = errorData.message || 'Oturum süreniz doldu, lütfen tekrar giriş yapın';
+          message = errorData.message || getApiErrorMessage('sessionExpired', resolvedLang);
         } else if (statusCode === 403) {
-          message = errorData.message || (resolvedLang === 'tr'
-            ? 'Bir hata oluştu. Lütfen daha sonra tekrar deneyiniz.'
-            : 'An error occurred. Please try again later.');
+          message = errorData.message || getApiErrorMessage('permissionDenied', resolvedLang);
         } else if (statusCode === 400) {
-          message = errorData.message || (resolvedLang === 'tr' ? 'Geçersiz istek' : 'Invalid request');
+          message = errorData.message || getApiErrorMessage('invalidRequest', resolvedLang);
         }
 
         const error = new ApiError(statusCode, message);
@@ -82,7 +80,7 @@ class ApiClient {
       if (data && typeof data === 'object') {
         const maybePayload = data as ApiResponse;
         if (typeof maybePayload.success === 'boolean' && !maybePayload.success) {
-          const businessMessage = maybePayload.message || maybePayload.error || (resolvedLang === 'tr' ? 'İş kuralı hatası' : 'Business rule error');
+          const businessMessage = maybePayload.message || maybePayload.error || getApiErrorMessage('businessRuleError', resolvedLang);
           const businessError = new ApiError(400, businessMessage);
           handleApiError(businessError, resolvedLang);
           throw businessError;
@@ -94,7 +92,7 @@ class ApiClient {
       if (error instanceof ApiError) {
         throw error;
       }
-      const networkError = new ApiError(0, 'Network error or server unavailable');
+      const networkError = new ApiError(0, getApiErrorMessage('networkError', resolvedLang));
       handleApiError(networkError, resolvedLang);
       throw networkError;
     }
