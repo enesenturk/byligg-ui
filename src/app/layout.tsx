@@ -11,9 +11,9 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "byLiGG — Fantasy Football Platform",
+  title: "byLiGG Fantazi Futbol",
   description:
-    "Fantasy football prediction platform. Predict the exact score, earn points, climb the leaderboard.",
+    "Futbol maçlarını tahmin et, tam skoru bil, puan kazan ve liderlik tablosunda yüksel.",
 };
 
 export default function RootLayout({

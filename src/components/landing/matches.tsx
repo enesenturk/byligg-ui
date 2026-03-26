@@ -144,7 +144,7 @@ export function Matches() {
             }}>
               {t.matches.badge}
             </div>
-            <h2 style={{ fontSize: "clamp(1.25rem, 2.5vw, 1.75rem)", fontWeight: 800, color: "#fff", margin: 0 }}>
+            <h2 style={{ fontSize: "clamp(1.25rem, 2.5vw, 1.75rem)", fontWeight: 800, color: "var(--theme-text-1)", margin: 0 }}>
               {t.matches.title}
             </h2>
           </div>
@@ -153,7 +153,7 @@ export function Matches() {
           <div style={{
             display: "flex", gap: "0.35rem",
             background: "var(--theme-bg-card)", padding: "0.2rem",
-            borderRadius: 10, border: "1px solid rgba(255,255,255,0.07)",
+            borderRadius: 10, border: "1px solid var(--theme-border-subtle)",
             flexWrap: "wrap",
           }}>
             {LEAGUES.map(lg => (
@@ -161,7 +161,7 @@ export function Matches() {
                 style={{
                   padding: "0.4rem 0.9rem", border: "none", borderRadius: 7,
                   background: activeLeague === lg.id ? "var(--theme-accent)" : "transparent",
-                  color: activeLeague === lg.id ? "var(--theme-bg-1)" : "rgba(180,200,255,0.6)",
+                  color: activeLeague === lg.id ? "var(--theme-bg-1)" : "var(--theme-text-2)",
                   fontSize: "0.8rem", fontWeight: 600, cursor: "pointer",
                   transition: "all 0.2s",
                   fontFamily: "var(--font-inter), sans-serif",
@@ -180,14 +180,14 @@ export function Matches() {
               <div key={idx}
                 style={{
                   background: "var(--theme-bg-card)",
-                  border: "1px solid rgba(255,255,255,0.07)",
+                  border: "1px solid var(--theme-border-subtle)",
                   borderRadius: 14, padding: "0 1.25rem",
                   display: "flex", alignItems: "center",
                   height: cardHeight, boxSizing: "border-box",
                   transition: "all 0.25s", overflow: "hidden",
                 }}
                 onMouseEnter={e => { (e.currentTarget as HTMLDivElement).style.borderColor = "rgba(var(--theme-accent-rgb),0.2)"; (e.currentTarget as HTMLDivElement).style.background = "var(--theme-bg-hover)"; }}
-                onMouseLeave={e => { (e.currentTarget as HTMLDivElement).style.borderColor = "rgba(255,255,255,0.07)"; (e.currentTarget as HTMLDivElement).style.background = "var(--theme-bg-card)"; }}
+                onMouseLeave={e => { (e.currentTarget as HTMLDivElement).style.borderColor = "var(--theme-border-subtle)"; (e.currentTarget as HTMLDivElement).style.background = "var(--theme-bg-card)"; }}
               >
                 {/* Home team — left */}
                 <div style={{ flex: 1, display: "flex", alignItems: "center", gap: "0.65rem", minWidth: 0 }}>
@@ -195,7 +195,7 @@ export function Matches() {
                     {match.home.emoji}
                   </div>
                   <div style={{ minWidth: 0 }}>
-                    <div style={{ fontWeight: 600, fontSize: "0.875rem", color: "#fff", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{match.home.name}</div>
+                    <div style={{ fontWeight: 600, fontSize: "0.875rem", color: "var(--theme-text-1)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{match.home.name}</div>
                     <div style={{ display: "flex", gap: 3, marginTop: 4 }}>
                       {match.home.form.map((r, i) => <span key={i} style={{ width: 5, height: 5, borderRadius: "50%", background: formColor(r), display: "block", flexShrink: 0 }} />)}
                     </div>
@@ -204,23 +204,23 @@ export function Matches() {
 
                 {/* Center */}
                 <div style={{ flexShrink: 0, width: 180, textAlign: "center", padding: "0 0.5rem" }}>
-                  <div style={{ fontSize: "0.65rem", color: "rgba(180,200,255,0.4)", marginBottom: 1 }}>{matchTime(match.day, match.clock)}</div>
-                  <div style={{ fontSize: "1rem", fontWeight: 800, color: "#fff", lineHeight: 1 }}>VS</div>
-                  <div style={{ fontSize: "0.6rem", color: "rgba(180,200,255,0.3)", margin: "2px 0 6px" }}>{matchLabel(match)}</div>
+                  <div style={{ fontSize: "0.65rem", color: "var(--theme-text-3)", marginBottom: 1 }}>{matchTime(match.day, match.clock)}</div>
+                  <div style={{ fontSize: "1rem", fontWeight: 800, color: "var(--theme-text-1)", lineHeight: 1 }}>VS</div>
+                  <div style={{ fontSize: "0.6rem", color: "var(--theme-text-3)", margin: "2px 0 6px" }}>{matchLabel(match)}</div>
                   <div style={{ display: "flex", gap: "0.3rem", justifyContent: "center" }}>
                     {["1", "X", "2"].map(o => (
                       <button key={o} onClick={() => pick(realIdx, o)}
                         style={{
                           width: 36, padding: "0.25rem 0",
                           background: pred === o ? "var(--theme-accent)" : "var(--theme-bg-1)",
-                          border: `1px solid ${pred === o ? "var(--theme-accent)" : "rgba(255,255,255,0.12)"}`,
+                          border: `1px solid ${pred === o ? "var(--theme-accent)" : "var(--theme-border)"}`,
                           borderRadius: 6,
-                          color: pred === o ? "var(--theme-bg-1)" : "rgba(255,255,255,0.8)",
+                          color: pred === o ? "var(--theme-bg-1)" : "var(--theme-text-2)",
                           fontWeight: 700, fontSize: "0.8rem", cursor: "pointer",
                           transition: "all 0.2s", fontFamily: "var(--font-inter), sans-serif",
                         }}
                         onMouseEnter={e => { if (pred !== o) (e.currentTarget as HTMLButtonElement).style.borderColor = "var(--theme-accent)"; }}
-                        onMouseLeave={e => { if (pred !== o) (e.currentTarget as HTMLButtonElement).style.borderColor = "rgba(255,255,255,0.12)"; }}
+                        onMouseLeave={e => { if (pred !== o) (e.currentTarget as HTMLButtonElement).style.borderColor = "var(--theme-border)"; }}
                       >{o}</button>
                     ))}
                   </div>
@@ -229,7 +229,7 @@ export function Matches() {
                 {/* Away team — right */}
                 <div style={{ flex: 1, display: "flex", alignItems: "center", justifyContent: "flex-end", gap: "0.65rem", minWidth: 0 }}>
                   <div style={{ minWidth: 0, textAlign: "right" }}>
-                    <div style={{ fontWeight: 600, fontSize: "0.875rem", color: "#fff", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{match.away.name}</div>
+                    <div style={{ fontWeight: 600, fontSize: "0.875rem", color: "var(--theme-text-1)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{match.away.name}</div>
                     <div style={{ display: "flex", gap: 3, marginTop: 4, justifyContent: "flex-end" }}>
                       {match.away.form.map((r, i) => <span key={i} style={{ width: 5, height: 5, borderRadius: "50%", background: formColor(r), display: "block", flexShrink: 0 }} />)}
                     </div>
@@ -247,13 +247,13 @@ export function Matches() {
         <div ref={viewAllRef} style={{ textAlign: "center", marginTop: GAP_VIEWALL }}>
           <a href="/matches" style={{
             padding: "0.6rem 1.5rem", borderRadius: 8,
-            border: "1px solid rgba(255,255,255,0.1)",
-            color: "rgba(180,200,255,0.7)", textDecoration: "none",
+            border: "1px solid var(--theme-border)",
+            color: "var(--theme-text-2)", textDecoration: "none",
             fontSize: "0.85rem", fontWeight: 600, transition: "all 0.3s",
             display: "inline-block",
           }}
             onMouseEnter={e => { (e.currentTarget as HTMLAnchorElement).style.borderColor = "var(--theme-accent)"; (e.currentTarget as HTMLAnchorElement).style.color = "var(--theme-accent)"; }}
-            onMouseLeave={e => { (e.currentTarget as HTMLAnchorElement).style.borderColor = "rgba(255,255,255,0.1)"; (e.currentTarget as HTMLAnchorElement).style.color = "rgba(180,200,255,0.7)"; }}
+            onMouseLeave={e => { (e.currentTarget as HTMLAnchorElement).style.borderColor = "var(--theme-border)"; (e.currentTarget as HTMLAnchorElement).style.color = "var(--theme-text-2)"; }}
           >
             {t.matches.viewAll} →
           </a>

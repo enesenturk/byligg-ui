@@ -1,4 +1,4 @@
-export type ThemeId = "sapphire" | "nature" | "atletik" | "midnight" | "ela";
+export type ThemeId = "sapphire" | "ivory" | "anthracite" | "linen";
 
 export interface Theme {
   id: ThemeId;
@@ -18,32 +18,25 @@ export const THEMES: Theme[] = [
     swatch: "from-blue-500 to-violet-500",
   },
   {
-    id: "nature",
-    name: { tr: "Kıyı", en: "Coast" },
-    accent: "#22d3ee",
-    accentRgb: "34,211,238",
-    swatch: "from-cyan-400 to-green-400",
+    id: "ivory",
+    name: { tr: "Adaçayı", en: "Sage" },
+    accent: "#4A9478",
+    accentRgb: "74,148,120",
+    swatch: "from-emerald-500 to-emerald-300",
   },
   {
-    id: "atletik",
-    name: { tr: "Atletik", en: "Athletic" },
-    accent: "#f97316",
-    accentRgb: "249,115,22",
-    swatch: "from-orange-500 to-slate-300",
+    id: "anthracite",
+    name: { tr: "Arduvaz", en: "Slate" },
+    accent: "#5BBFB5",
+    accentRgb: "91,191,181",
+    swatch: "from-teal-400 to-violet-400",
   },
   {
-    id: "midnight",
-    name: { tr: "Gece Moru", en: "Midnight Purple" },
-    accent: "#9333ea",
-    accentRgb: "147,51,234",
-    swatch: "from-purple-600 to-slate-100",
-  },
-  {
-    id: "ela",
-    name: { tr: "Ela", en: "Hazel" },
-    accent: "#c084fc",
-    accentRgb: "192,132,252",
-    swatch: "from-purple-400 to-lime-400",
+    id: "linen",
+    name: { tr: "Şakayık", en: "Peony" },
+    accent: "#7C3AED",
+    accentRgb: "124,58,237",
+    swatch: "from-pink-400 to-violet-600",
   },
 ];
 

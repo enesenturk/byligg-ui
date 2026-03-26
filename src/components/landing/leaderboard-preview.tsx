@@ -14,7 +14,7 @@ const rankBadge = (i: number) => {
   if (i === 0) return { bg: "linear-gradient(135deg, #fbbf24, #f59e0b)", color: "#000" };
   if (i === 1) return { bg: "linear-gradient(135deg, #9ca3af, #6b7280)", color: "#000" };
   if (i === 2) return { bg: "linear-gradient(135deg, #d97706, #b45309)", color: "#000" };
-  return { bg: "rgba(255,255,255,0.06)", color: "rgba(180,200,255,0.6)" };
+  return { bg: "var(--theme-border-subtle)", color: "var(--theme-text-3)" };
 };
 
 export function LeaderboardPreview() {
@@ -34,10 +34,10 @@ export function LeaderboardPreview() {
           }}>
             {t.leaderboard.badge}
           </div>
-          <h2 style={{ fontSize: "clamp(2rem, 5vw, 3rem)", fontWeight: 800, color: "#fff", marginBottom: "1rem" }}>
+          <h2 style={{ fontSize: "clamp(2rem, 5vw, 3rem)", fontWeight: 800, color: "var(--theme-text-1)", marginBottom: "1rem" }}>
             {t.leaderboard.title}
           </h2>
-          <p style={{ color: "rgba(180,200,255,0.6)", fontSize: "1.1rem", maxWidth: 600, margin: "0 auto" }}>
+          <p style={{ color: "var(--theme-text-2)", fontSize: "1.1rem", maxWidth: 600, margin: "0 auto" }}>
             {t.leaderboard.subtitle}
           </p>
         </div>
@@ -45,9 +45,9 @@ export function LeaderboardPreview() {
         {/* Two-column layout */}
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "2rem" }} className="leaderboard-grid">
           {/* Main leaderboard */}
-          <div style={{ background: "var(--theme-bg-card)", border: "1px solid rgba(255,255,255,0.07)", borderRadius: 20, overflow: "hidden" }}>
-            <div style={{ padding: "1.5rem", borderBottom: "1px solid rgba(255,255,255,0.07)", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-              <h3 style={{ fontWeight: 700, fontSize: "1.25rem", color: "#fff", margin: 0 }}>{t.leaderboard.thisWeek}</h3>
+          <div style={{ background: "var(--theme-bg-card)", border: "1px solid var(--theme-border-subtle)", borderRadius: 20, overflow: "hidden" }}>
+            <div style={{ padding: "1.5rem", borderBottom: "1px solid var(--theme-border-subtle)", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+              <h3 style={{ fontWeight: 700, fontSize: "1.25rem", color: "var(--theme-text-1)", margin: 0 }}>{t.leaderboard.thisWeek}</h3>
               <span style={{ padding: "0.35rem 0.75rem", background: "rgba(var(--theme-accent-rgb),0.08)", borderRadius: 100, fontSize: "0.75rem", color: "var(--theme-accent)", fontWeight: 600 }}>
                 {t.leaderboard.live}
               </span>
@@ -80,7 +80,7 @@ export function LeaderboardPreview() {
                         {p.name[0].toUpperCase()}
                       </div>
                       <div style={{ minWidth: 0 }}>
-                        <div style={{ fontWeight: 600, color: "#fff", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{p.name}</div>
+                        <div style={{ fontWeight: 600, color: "var(--theme-text-1)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{p.name}</div>
                         <div style={{ display: "flex", gap: 3, marginTop: 2 }}>
                           {p.badges.map((b, bi) => <span key={bi} style={{ fontSize: "0.7rem" }}>{b}</span>)}
                           <span style={{ fontSize: "0.7rem" }}>{p.flag}</span>
@@ -92,7 +92,7 @@ export function LeaderboardPreview() {
                       <div style={{ fontWeight: 700, fontSize: "1.1rem", color: "var(--theme-accent)" }}>
                         {p.pts.toLocaleString()}
                       </div>
-                      <div style={{ fontSize: "0.75rem", color: "rgba(180,200,255,0.4)" }}>{p.accuracy}</div>
+                      <div style={{ fontSize: "0.75rem", color: "var(--theme-text-3)" }}>{p.accuracy}</div>
                     </div>
                   </div>
                 );
@@ -104,7 +104,7 @@ export function LeaderboardPreview() {
           <div style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}>
             {/* Personal stats card */}
             <div style={{ background: "var(--theme-bg-card)", border: "1px solid rgba(255,255,255,0.07)", borderRadius: 20, padding: "1.5rem" }}>
-              <h3 style={{ fontWeight: 700, fontSize: "1.1rem", color: "#fff", marginBottom: "1.5rem" }}>{t.leaderboard.rankingSystem}</h3>
+              <h3 style={{ fontWeight: 700, fontSize: "1.1rem", color: "var(--theme-text-1)", marginBottom: "1.5rem" }}>{t.leaderboard.rankingSystem}</h3>
               <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem" }}>
                 {[
                   { label: t.leaderboard.tierExact, pts: "10p", color: "#00ff88" },
@@ -116,10 +116,10 @@ export function LeaderboardPreview() {
                 ].map((tier) => (
                   <div key={tier.label} style={{
                     background: "var(--theme-bg-1)", borderRadius: 10, padding: "0.75rem 1rem",
-                    border: "1px solid rgba(255,255,255,0.05)",
+                    border: "1px solid var(--theme-border-subtle)",
                   }}>
                     <div style={{ fontSize: "1.25rem", fontWeight: 800, color: tier.color }}>{tier.pts}</div>
-                    <div style={{ fontSize: "0.8rem", color: "rgba(180,200,255,0.5)", marginTop: 2 }}>{tier.label}</div>
+                    <div style={{ fontSize: "0.8rem", color: "var(--theme-text-3)", marginTop: 2 }}>{tier.label}</div>
                   </div>
                 ))}
               </div>
@@ -131,18 +131,18 @@ export function LeaderboardPreview() {
               border: "1px solid rgba(var(--theme-accent-rgb),0.15)",
               borderRadius: 20, padding: "1.5rem",
             }}>
-              <h3 style={{ fontWeight: 700, fontSize: "1.1rem", color: "#fff", marginBottom: "0.75rem" }}>{t.leaderboard.multiplierTitle}</h3>
+              <h3 style={{ fontWeight: 700, fontSize: "1.1rem", color: "var(--theme-text-1)", marginBottom: "0.75rem" }}>{t.leaderboard.multiplierTitle}</h3>
               <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                  <span style={{ color: "rgba(180,200,255,0.6)", fontSize: "0.9rem" }}>{t.leaderboard.derby}</span>
+                  <span style={{ color: "var(--theme-text-2)", fontSize: "0.9rem" }}>{t.leaderboard.derby}</span>
                   <span style={{ fontWeight: 700, color: "#fbbf24" }}>x2</span>
                 </div>
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                  <span style={{ color: "rgba(180,200,255,0.6)", fontSize: "0.9rem" }}>{t.leaderboard.campaign}</span>
+                  <span style={{ color: "var(--theme-text-2)", fontSize: "0.9rem" }}>{t.leaderboard.campaign}</span>
                   <span style={{ fontWeight: 700, color: "#00ff88" }}>x3</span>
                 </div>
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                  <span style={{ color: "rgba(180,200,255,0.6)", fontSize: "0.9rem" }}>{t.leaderboard.deadline}</span>
+                  <span style={{ color: "var(--theme-text-2)", fontSize: "0.9rem" }}>{t.leaderboard.deadline}</span>
                   <span style={{ fontWeight: 700, color: "#00D4FF" }}>-15 dk</span>
                 </div>
               </div>
@@ -154,12 +154,12 @@ export function LeaderboardPreview() {
         <div style={{ textAlign: "center", marginTop: "2.5rem" }}>
           <a href="/leaderboard" style={{
             padding: "0.75rem 1.75rem", borderRadius: 8,
-            border: "1px solid rgba(255,255,255,0.1)",
-            color: "rgba(180,200,255,0.7)", textDecoration: "none",
+            border: "1px solid var(--theme-border)",
+            color: "var(--theme-text-2)", textDecoration: "none",
             fontSize: "0.9rem", fontWeight: 600, display: "inline-block", transition: "all 0.3s",
           }}
             onMouseEnter={e => { (e.currentTarget as HTMLAnchorElement).style.borderColor = "var(--theme-accent)"; (e.currentTarget as HTMLAnchorElement).style.color = "var(--theme-accent)"; }}
-            onMouseLeave={e => { (e.currentTarget as HTMLAnchorElement).style.borderColor = "rgba(255,255,255,0.1)"; (e.currentTarget as HTMLAnchorElement).style.color = "rgba(180,200,255,0.7)"; }}
+            onMouseLeave={e => { (e.currentTarget as HTMLAnchorElement).style.borderColor = "var(--theme-border)"; (e.currentTarget as HTMLAnchorElement).style.color = "var(--theme-text-2)"; }}
           >
             {t.leaderboard.viewAll} →
           </a>

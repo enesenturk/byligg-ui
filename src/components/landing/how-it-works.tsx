@@ -55,10 +55,10 @@ export function HowItWorks() {
           }}>
             {t.howItWorks.badge}
           </div>
-          <h2 style={{ fontSize: "clamp(1.5rem, 3.5vw, 2.5rem)", fontWeight: 800, marginBottom: "0.4rem", color: "#fff" }}>
+          <h2 style={{ fontSize: "clamp(1.5rem, 3.5vw, 2.5rem)", fontWeight: 800, marginBottom: "0.4rem", color: "var(--theme-text-1)" }}>
             {t.howItWorks.title}
           </h2>
-          <p style={{ color: "rgba(180,200,255,0.6)", fontSize: "clamp(0.85rem, 1.2vw, 1rem)", maxWidth: 560, margin: "0 auto" }}>
+          <p style={{ color: "var(--theme-text-2)", fontSize: "clamp(0.85rem, 1.2vw, 1rem)", maxWidth: 560, margin: "0 auto" }}>
             {t.howItWorks.subtitle}
           </p>
         </div>
@@ -83,13 +83,13 @@ export function HowItWorks() {
                 }}
                 onMouseLeave={e => {
                   const el = (e.currentTarget as HTMLDivElement).querySelector(".step-num") as HTMLDivElement | null;
-                  if (el) { el.style.borderColor = "rgba(255,255,255,0.07)"; el.style.transform = ""; el.style.boxShadow = ""; }
+                  if (el) { el.style.borderColor = "var(--theme-border-subtle)"; el.style.transform = ""; el.style.boxShadow = ""; }
                 }}
               >
                 <div className="step-num" style={{
                   width: iconSize, height: iconSize,
                   background: "var(--theme-bg-card)",
-                  border: "2px solid rgba(255,255,255,0.07)",
+                  border: "2px solid var(--theme-border-subtle)",
                   borderRadius: borderRadius,
                   display: "flex", alignItems: "center", justifyContent: "center",
                   margin: "0 auto 0.75rem",
@@ -108,10 +108,10 @@ export function HowItWorks() {
                     {step.num.replace("0", "")}
                   </span>
                 </div>
-                <h3 style={{ fontSize: "clamp(0.85rem, 1.1vw, 1rem)", fontWeight: 700, marginBottom: "0.3rem", color: "#fff" }}>
+                <h3 style={{ fontSize: "clamp(0.85rem, 1.1vw, 1rem)", fontWeight: 700, marginBottom: "0.3rem", color: "var(--theme-text-1)" }}>
                   {title}
                 </h3>
-                <p style={{ color: "rgba(180,200,255,0.55)", fontSize: "clamp(0.78rem, 0.95vw, 0.875rem)", lineHeight: 1.5, margin: 0 }}>
+                <p style={{ color: "var(--theme-text-2)", fontSize: "clamp(0.78rem, 0.95vw, 0.875rem)", lineHeight: 1.5, margin: 0 }}>
                   {desc}
                 </p>
               </div>
@@ -133,10 +133,10 @@ export function HowItWorks() {
         }}>
           <div style={{ position: "absolute", top: "-60%", right: "-10%", width: "35%", paddingBottom: "35%", borderRadius: "50%", background: "radial-gradient(circle, rgba(var(--theme-accent-rgb),0.06) 0%, transparent 70%)", pointerEvents: "none" }} />
           <div style={{ position: "relative", zIndex: 1 }}>
-            <div style={{ fontSize: "clamp(1rem, 2vw, 1.4rem)", fontWeight: 800, color: "#fff", marginBottom: "0.25rem" }}>
+            <div style={{ fontSize: "clamp(1rem, 2vw, 1.4rem)", fontWeight: 800, color: "var(--theme-text-1)", marginBottom: "0.25rem" }}>
               {t.cta.title}
             </div>
-            <div style={{ color: "rgba(180,200,255,0.6)", fontSize: "clamp(0.8rem, 1vw, 0.9rem)" }}>
+            <div style={{ color: "var(--theme-text-2)", fontSize: "clamp(0.8rem, 1vw, 0.9rem)" }}>
               {t.cta.subtitle}
             </div>
           </div>
@@ -154,12 +154,12 @@ export function HowItWorks() {
             </a>
             <a href="/login" style={{
               padding: "0.7rem 1.5rem", borderRadius: 8,
-              border: "1px solid rgba(255,255,255,0.12)",
-              color: "rgba(180,200,255,0.75)", fontWeight: 600, fontSize: "0.875rem",
+              border: "1px solid var(--theme-border)",
+              color: "var(--theme-text-2)", fontWeight: 600, fontSize: "0.875rem",
               textDecoration: "none", transition: "all 0.3s", whiteSpace: "nowrap",
             }}
               onMouseEnter={e => { (e.currentTarget as HTMLAnchorElement).style.borderColor = "var(--theme-accent)"; (e.currentTarget as HTMLAnchorElement).style.color = "var(--theme-accent)"; }}
-              onMouseLeave={e => { (e.currentTarget as HTMLAnchorElement).style.borderColor = "rgba(255,255,255,0.12)"; (e.currentTarget as HTMLAnchorElement).style.color = "rgba(180,200,255,0.75)"; }}
+              onMouseLeave={e => { (e.currentTarget as HTMLAnchorElement).style.borderColor = "var(--theme-border)"; (e.currentTarget as HTMLAnchorElement).style.color = "var(--theme-text-2)"; }}
             >
               {t.cta.loginLabel}
             </a>

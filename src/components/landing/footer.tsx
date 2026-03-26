@@ -1,6 +1,7 @@
 "use client";
 
 import { useI18n } from "@/providers/i18n-provider";
+import { LogoWordmark } from "@/components/brand/logo-wordmark";
 
 export function Footer() {
   const { t } = useI18n();
@@ -12,26 +13,16 @@ export function Footer() {
   };
 
   return (
-    <footer style={{ padding: "4rem 2rem 2rem", borderTop: "1px solid rgba(255,255,255,0.07)", background: "var(--theme-bg-1)" }}>
+    <footer style={{ padding: "4rem 2rem 2rem", borderTop: "1px solid var(--theme-border-subtle)", background: "var(--theme-bg-1)" }}>
       <div style={{ maxWidth: 1200, margin: "0 auto" }}>
         {/* Grid */}
         <div style={{ display: "grid", gridTemplateColumns: "2fr 1fr 1fr 1fr", gap: "4rem", marginBottom: "3rem" }} className="footer-grid">
           {/* Brand */}
           <div>
-            <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", marginBottom: "1rem" }}>
-              <div style={{
-                width: 36, height: 36, borderRadius: 10,
-                background: "linear-gradient(135deg, var(--theme-accent), var(--theme-accent-2))",
-                display: "flex", alignItems: "center", justifyContent: "center",
-                fontWeight: 900, fontSize: "0.85rem", color: "var(--theme-bg-1)",
-              }}>bG</div>
-              <span style={{
-                fontSize: "1.3rem", fontWeight: 800,
-                background: "linear-gradient(135deg, var(--theme-accent), var(--theme-accent-2))",
-                WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text",
-              }}>byLiGG</span>
+            <div style={{ marginBottom: "1rem" }}>
+              <LogoWordmark fontSize={22} variant="gradient" />
             </div>
-            <p style={{ color: "rgba(180,200,255,0.5)", fontSize: "0.9rem", maxWidth: 280, lineHeight: 1.7, marginBottom: "1.5rem" }}>
+            <p style={{ color: "var(--theme-text-3)", fontSize: "0.9rem", maxWidth: 280, lineHeight: 1.7, marginBottom: "1.5rem" }}>
               {t.footer.tagline}
             </p>
             <div style={{ display: "flex", gap: "0.75rem" }}>
@@ -39,12 +30,12 @@ export function Footer() {
                 <a key={name} href="#" aria-label={name}
                   style={{
                     width: 38, height: 38,
-                    background: "var(--theme-bg-card)", border: "1px solid rgba(255,255,255,0.07)",
+                    background: "var(--theme-bg-card)", border: "1px solid var(--theme-border-subtle)",
                     borderRadius: 10, display: "flex", alignItems: "center", justifyContent: "center",
-                    color: "rgba(180,200,255,0.5)", textDecoration: "none", transition: "all 0.3s",
+                    color: "var(--theme-text-3)", textDecoration: "none", transition: "all 0.3s",
                   }}
                   onMouseEnter={e => { (e.currentTarget as HTMLAnchorElement).style.borderColor = "var(--theme-accent)"; (e.currentTarget as HTMLAnchorElement).style.color = "var(--theme-accent)"; }}
-                  onMouseLeave={e => { (e.currentTarget as HTMLAnchorElement).style.borderColor = "rgba(255,255,255,0.07)"; (e.currentTarget as HTMLAnchorElement).style.color = "rgba(180,200,255,0.5)"; }}
+                  onMouseLeave={e => { (e.currentTarget as HTMLAnchorElement).style.borderColor = "var(--theme-border-subtle)"; (e.currentTarget as HTMLAnchorElement).style.color = "var(--theme-text-3)"; }}
                 >
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
                     <path d={path} />
@@ -56,15 +47,15 @@ export function Footer() {
 
           {/* Product */}
           <div>
-            <p style={{ fontSize: "0.8rem", fontWeight: 600, textTransform: "uppercase" as const, letterSpacing: "0.1em", color: "rgba(255,255,255,0.3)", marginBottom: "1rem" }}>
+            <p style={{ fontSize: "0.8rem", fontWeight: 600, textTransform: "uppercase" as const, letterSpacing: "0.1em", color: "var(--theme-text-3)", marginBottom: "1rem" }}>
               {t.footer.product}
             </p>
             <ul style={{ listStyle: "none", padding: 0, margin: 0 }}>
               {[t.footer.features, t.footer.howItWorks, t.footer.leaderboard].map(label => (
                 <li key={label} style={{ marginBottom: "0.75rem" }}>
-                  <a href="#" style={{ color: "rgba(180,200,255,0.55)", textDecoration: "none", fontSize: "0.9rem", transition: "color 0.3s" }}
+                  <a href="#" style={{ color: "var(--theme-text-3)", textDecoration: "none", fontSize: "0.9rem", transition: "color 0.3s" }}
                     onMouseEnter={e => { (e.currentTarget as HTMLAnchorElement).style.color = "var(--theme-accent)"; }}
-                    onMouseLeave={e => { (e.currentTarget as HTMLAnchorElement).style.color = "rgba(180,200,255,0.55)"; }}
+                    onMouseLeave={e => { (e.currentTarget as HTMLAnchorElement).style.color = "var(--theme-text-3)"; }}
                   >{label}</a>
                 </li>
               ))}
@@ -73,15 +64,15 @@ export function Footer() {
 
           {/* Legal */}
           <div>
-            <p style={{ fontSize: "0.8rem", fontWeight: 600, textTransform: "uppercase" as const, letterSpacing: "0.1em", color: "rgba(255,255,255,0.3)", marginBottom: "1rem" }}>
+            <p style={{ fontSize: "0.8rem", fontWeight: 600, textTransform: "uppercase" as const, letterSpacing: "0.1em", color: "var(--theme-text-3)", marginBottom: "1rem" }}>
               {t.footer.legal}
             </p>
             <ul style={{ listStyle: "none", padding: 0, margin: 0 }}>
               {[t.footer.privacy, t.footer.terms, t.footer.contact].map(label => (
                 <li key={label} style={{ marginBottom: "0.75rem" }}>
-                  <a href="#" style={{ color: "rgba(180,200,255,0.55)", textDecoration: "none", fontSize: "0.9rem", transition: "color 0.3s" }}
+                  <a href="#" style={{ color: "var(--theme-text-3)", textDecoration: "none", fontSize: "0.9rem", transition: "color 0.3s" }}
                     onMouseEnter={e => { (e.currentTarget as HTMLAnchorElement).style.color = "var(--theme-accent)"; }}
-                    onMouseLeave={e => { (e.currentTarget as HTMLAnchorElement).style.color = "rgba(180,200,255,0.55)"; }}
+                    onMouseLeave={e => { (e.currentTarget as HTMLAnchorElement).style.color = "var(--theme-text-3)"; }}
                   >{label}</a>
                 </li>
               ))}
@@ -90,13 +81,13 @@ export function Footer() {
 
           {/* Download */}
           <div>
-            <p style={{ fontSize: "0.8rem", fontWeight: 600, textTransform: "uppercase" as const, letterSpacing: "0.1em", color: "rgba(255,255,255,0.3)", marginBottom: "1rem" }}>
+            <p style={{ fontSize: "0.8rem", fontWeight: 600, textTransform: "uppercase" as const, letterSpacing: "0.1em", color: "var(--theme-text-3)", marginBottom: "1rem" }}>
               {t.footer.comingSoon}
             </p>
             <ul style={{ listStyle: "none", padding: 0, margin: 0 }}>
               {[t.footer.iosApp, t.footer.androidApp, t.footer.apiAccess].map(label => (
                 <li key={label} style={{ marginBottom: "0.75rem" }}>
-                  <span style={{ color: "rgba(180,200,255,0.3)", fontSize: "0.9rem" }}>{label}</span>
+                  <span style={{ color: "var(--theme-text-3)", fontSize: "0.9rem" }}>{label}</span>
                 </li>
               ))}
             </ul>
@@ -106,9 +97,9 @@ export function Footer() {
         {/* Bottom */}
         <div style={{
           maxWidth: "100%", paddingTop: "2rem",
-          borderTop: "1px solid rgba(255,255,255,0.06)",
+          borderTop: "1px solid var(--theme-border-subtle)",
           display: "flex", alignItems: "center", justifyContent: "space-between",
-          color: "rgba(180,200,255,0.3)", fontSize: "0.85rem", flexWrap: "wrap", gap: "1rem",
+          color: "var(--theme-text-3)", fontSize: "0.85rem", flexWrap: "wrap", gap: "1rem",
         }}>
           <span>{t.footer.copyright}</span>
           <span>byligg.gg</span>

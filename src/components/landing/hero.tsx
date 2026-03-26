@@ -1,6 +1,7 @@
 "use client";
 
 import { useI18n } from "@/providers/i18n-provider";
+import { LogoWordmark } from "@/components/brand/logo-wordmark";
 
 function Particles() {
   const dots = [
@@ -24,7 +25,11 @@ function Particles() {
   );
 }
 
-export function Hero() {
+interface HeroProps {
+  onOpenRegister: () => void;
+}
+
+export function Hero({ onOpenRegister }: HeroProps) {
   const { t } = useI18n();
 
   return (
@@ -45,7 +50,7 @@ export function Hero() {
         background: `
           radial-gradient(ellipse 80% 50% at 50% -20%, rgba(var(--theme-accent-rgb),0.1), transparent),
           radial-gradient(ellipse 60% 40% at 80% 60%, rgba(var(--theme-accent-2-rgb),0.08), transparent),
-          linear-gradient(180deg, var(--theme-bg-1) 0%, var(--theme-bg-2) 50%, var(--theme-bg-1) 100%)
+          linear-gradient(180deg, var(--theme-bg-hero) 0%, rgba(var(--theme-bg-hero-rgb),0.85) 50%, var(--theme-bg-hero) 100%)
         `,
         pointerEvents: "none",
       }} />
@@ -65,21 +70,14 @@ export function Hero() {
       {/* Content */}
       <div style={{ position: "relative", zIndex: 10, maxWidth: 1000, textAlign: "center", width: "100%" }}>
 
-        {/* byLiGG gradient logo */}
-        <h1 style={{
-          fontSize: "clamp(4rem, 12vw, 8rem)",
-          fontWeight: 900, letterSpacing: "0.1em",
-          lineHeight: 1.15, marginBottom: "0.5rem",
-          paddingBottom: "0.05em",
-          background: "linear-gradient(90deg, var(--theme-accent) 0%, var(--theme-accent-2) 100%)",
-          WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text",
-          filter: "drop-shadow(0 0 40px rgba(var(--theme-accent-rgb),0.2))",
-        }}>
-          byLiGG
+        {/* byLiGG logo wordmark */}
+        <h1 style={{ margin: 0, marginBottom: "0.5rem", lineHeight: 1, filter: "drop-shadow(0 0 40px rgba(var(--theme-accent-rgb),0.2))" }}
+          className="hero-logo">
+          <LogoWordmark fontSize={96} variant="gradient" />
         </h1>
 
         <p style={{ fontSize: "0.75rem", fontWeight: 600, letterSpacing: "0.35em", textTransform: "uppercase", color: "rgba(180,200,255,0.45)", marginBottom: "1.5rem" }}>
-          FANTASY FOOTBALL
+          {t.hero.tagline}
         </p>
 
         {/* Divider */}
@@ -107,30 +105,31 @@ export function Hero() {
 
         {/* CTAs */}
         <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "1rem", flexWrap: "wrap", marginBottom: "4rem" }}>
-          <a href="/register" style={{
+          <button onClick={onOpenRegister} style={{
             padding: "1rem 2rem", borderRadius: 100, border: "none",
             background: "linear-gradient(135deg, var(--theme-accent), var(--theme-accent-2))",
             color: "#fff", fontWeight: 700, fontSize: "1rem",
-            textDecoration: "none", cursor: "pointer",
+            cursor: "pointer",
             boxShadow: "0 4px 24px rgba(var(--theme-accent-rgb),0.4)",
             transition: "all 0.3s", display: "inline-flex", alignItems: "center", gap: 8,
+            fontFamily: "var(--font-inter), sans-serif",
           }}
-            onMouseEnter={e => { (e.currentTarget as HTMLAnchorElement).style.transform = "translateY(-2px)"; (e.currentTarget as HTMLAnchorElement).style.boxShadow = "0 8px 32px rgba(var(--theme-accent-rgb),0.6)"; }}
-            onMouseLeave={e => { (e.currentTarget as HTMLAnchorElement).style.transform = ""; (e.currentTarget as HTMLAnchorElement).style.boxShadow = "0 4px 24px rgba(var(--theme-accent-rgb),0.4)"; }}
+            onMouseEnter={e => { (e.currentTarget as HTMLButtonElement).style.transform = "translateY(-2px)"; (e.currentTarget as HTMLButtonElement).style.boxShadow = "0 8px 32px rgba(var(--theme-accent-rgb),0.6)"; }}
+            onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.transform = ""; (e.currentTarget as HTMLButtonElement).style.boxShadow = "0 4px 24px rgba(var(--theme-accent-rgb),0.4)"; }}
           >
             🚀 {t.hero.cta}
-          </a>
+          </button>
           <a href="#how-it-works" style={{
             padding: "1rem 2rem", borderRadius: 100,
             border: "1px solid rgba(255,255,255,0.15)",
-            background: "rgba(var(--theme-bg-1-rgb),0.6)", color: "#fff",
+            background: "rgba(var(--theme-bg-hero-rgb),0.5)", color: "#fff",
             fontWeight: 700, fontSize: "1rem",
             textDecoration: "none", cursor: "pointer",
             backdropFilter: "blur(12px)", transition: "all 0.3s",
             display: "inline-flex", alignItems: "center", gap: 8,
           }}
-            onMouseEnter={e => { (e.currentTarget as HTMLAnchorElement).style.background = "rgba(255,255,255,0.08)"; }}
-            onMouseLeave={e => { (e.currentTarget as HTMLAnchorElement).style.background = "rgba(var(--theme-bg-1-rgb),0.6)"; }}
+            onMouseEnter={e => { (e.currentTarget as HTMLAnchorElement).style.background = "rgba(var(--theme-bg-hero-rgb),0.75)"; }}
+            onMouseLeave={e => { (e.currentTarget as HTMLAnchorElement).style.background = "rgba(var(--theme-bg-hero-rgb),0.5)"; }}
           >
             📊 {t.hero.ctaSecondary}
           </a>

@@ -4,7 +4,7 @@ import { useI18n } from "@/providers/i18n-provider";
 
 const cardStyle: React.CSSProperties = {
   background: "var(--theme-bg-card)",
-  border: "1px solid rgba(255,255,255,0.07)",
+  border: "1px solid var(--theme-border-subtle)",
   borderRadius: 16,
   padding: "2rem",
   transition: "all 0.3s ease",
@@ -37,10 +37,10 @@ export function Features() {
           }}>
             {t.features.badge}
           </div>
-          <h2 style={{ fontSize: "clamp(2rem, 5vw, 3rem)", fontWeight: 800, marginBottom: "1rem", color: "#fff" }}>
+          <h2 style={{ fontSize: "clamp(2rem, 5vw, 3rem)", fontWeight: 800, marginBottom: "1rem", color: "var(--theme-text-1)" }}>
             {t.features.title}
           </h2>
-          <p style={{ color: "rgba(180,200,255,0.6)", fontSize: "1.1rem", maxWidth: 600, margin: "0 auto" }}>
+          <p style={{ color: "var(--theme-text-2)", fontSize: "1.1rem", maxWidth: 600, margin: "0 auto" }}>
             {t.features.subtitle}
           </p>
         </div>
@@ -54,11 +54,11 @@ export function Features() {
                 const el = e.currentTarget as HTMLDivElement;
                 el.style.borderColor = "var(--theme-accent)";
                 el.style.transform = "translateY(-4px)";
-                el.style.boxShadow = "0 20px 40px rgba(0,0,0,0.4)";
+                el.style.boxShadow = "0 20px 40px rgba(0,0,0,0.15)";
               }}
               onMouseLeave={e => {
                 const el = e.currentTarget as HTMLDivElement;
-                el.style.borderColor = "rgba(255,255,255,0.07)";
+                el.style.borderColor = "var(--theme-border-subtle)";
                 el.style.transform = "";
                 el.style.boxShadow = "";
               }}
@@ -71,10 +71,10 @@ export function Features() {
               }}>
                 {card.icon}
               </div>
-              <h3 style={{ fontSize: "1.2rem", fontWeight: 700, marginBottom: "0.75rem", color: "#fff" }}>
+              <h3 style={{ fontSize: "1.2rem", fontWeight: 700, marginBottom: "0.75rem", color: "var(--theme-text-1)" }}>
                 {card.title}
               </h3>
-              <p style={{ color: "rgba(180,200,255,0.6)", fontSize: "0.95rem", lineHeight: 1.7 }}>
+              <p style={{ color: "var(--theme-text-2)", fontSize: "0.95rem", lineHeight: 1.7 }}>
                 {card.desc}
               </p>
             </div>

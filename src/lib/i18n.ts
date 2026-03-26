@@ -10,6 +10,7 @@ export interface Translations {
     cta: string;
   };
   hero: {
+    tagline: string;
     badge: string;
     line1: string;
     line2: string;
@@ -115,6 +116,27 @@ export interface Translations {
     teamColor: string;
     teamColorLocked: string;
   };
+  register: {
+    title: string;
+    subtitle: string;
+    displayName: string;
+    displayNamePlaceholder: string;
+    username: string;
+    usernamePlaceholder: string;
+    usernameHint: string;
+    email: string;
+    emailPlaceholder: string;
+    emailHint: string;
+    password: string;
+    passwordPlaceholder: string;
+    passwordHint: string;
+    confirmPassword: string;
+    confirmPasswordPlaceholder: string;
+    submit: string;
+    loading: string;
+    haveAccount: string;
+    login: string;
+  };
   footer: {
     tagline: string;
     product: string;
@@ -161,6 +183,7 @@ export const tr: Translations = {
     cta: "Hemen Oyna",
   },
   hero: {
+    tagline: "Fantazi Futbol",
     badge: "⚽  Yeni Sezon Başladı",
     line1: "TAHMİN ET",
     line2: "YARIŞ",
@@ -272,6 +295,27 @@ export const tr: Translations = {
     teamColor: "Favori Takım",
     teamColorLocked: "Giriş yapınca açılır",
   },
+  register: {
+    title: "Kayıt Ol",
+    subtitle: "Topluluğa katıl, oynamaya başla",
+    displayName: "Görünen Ad",
+    displayNamePlaceholder: "Ahmet Yılmaz",
+    username: "Kullanıcı Adı",
+    usernamePlaceholder: "ahmet_99",
+    usernameHint: "Harf, rakam, _ ve . kullanabilirsin",
+    email: "E-posta",
+    emailPlaceholder: "ahmet@email.com",
+    emailHint: "Gizli tutulur, profilinde yer almaz.",
+    password: "Şifre",
+    passwordPlaceholder: "••••••••",
+    passwordHint: "En az 6 karakter, 1 harf ve 1 rakam",
+    confirmPassword: "Şifre Tekrar",
+    confirmPasswordPlaceholder: "••••••••",
+    submit: "Kayıt Ol",
+    loading: "Kayıt olunuyor...",
+    haveAccount: "Zaten hesabın var mı?",
+    login: "Giriş Yap",
+  },
   footer: {
     tagline: "Futbol tahmininin en heyecanlı adresi.",
     product: "Ürün",
@@ -318,6 +362,7 @@ export const en: Translations = {
     cta: "Play Now",
   },
   hero: {
+    tagline: "Fantasy Football",
     badge: "⚽  New Season Has Started",
     line1: "PREDICT",
     line2: "COMPETE",
@@ -428,6 +473,27 @@ export const en: Translations = {
     amber: "Golden Cup",
     teamColor: "Favorite Team",
     teamColorLocked: "Login to unlock",
+  },
+  register: {
+    title: "Sign Up",
+    subtitle: "Join the community and start playing",
+    displayName: "Display Name",
+    displayNamePlaceholder: "John Smith",
+    username: "Username",
+    usernamePlaceholder: "john_99",
+    usernameHint: "Letters, numbers, _ and . only",
+    email: "Email",
+    emailPlaceholder: "john@email.com",
+    emailHint: "Private — never shown on your profile.",
+    password: "Password",
+    passwordPlaceholder: "••••••••",
+    passwordHint: "At least 6 characters, 1 letter and 1 number",
+    confirmPassword: "Confirm Password",
+    confirmPasswordPlaceholder: "••••••••",
+    submit: "Create Account",
+    loading: "Creating account...",
+    haveAccount: "Already have an account?",
+    login: "Log In",
   },
   footer: {
     tagline: "The most exciting football prediction platform.",

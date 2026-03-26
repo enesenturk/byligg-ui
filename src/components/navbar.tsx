@@ -1,6 +1,7 @@
 ﻿"use client";
 
 import { useState, useEffect } from "react";
+import { LogoWordmark } from "@/components/brand/logo-wordmark";
 
 const NAV_LINKS = [
   { label: "Ürün", href: "#features" },
@@ -28,26 +29,8 @@ export function Navbar() {
     >
       <nav className="mx-auto max-w-7xl px-6 h-16 flex items-center justify-between">
         {/* Logo */}
-        <a href="/" className="flex items-center gap-2 group">
-          <div className="size-8 rounded-lg bg-gradient-to-br from-violet-500 to-indigo-600 flex items-center justify-center shadow-lg shadow-violet-500/30 group-hover:shadow-violet-500/50 transition-shadow">
-            <svg
-              width="16"
-              height="16"
-              viewBox="0 0 16 16"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M3 8L7 4L11 8L7 12L3 8Z"
-                fill="white"
-                fillOpacity="0.9"
-              />
-              <path d="M9 6L13 6L13 10L9 10" stroke="white" strokeOpacity="0.6" strokeWidth="1.5" fill="none" />
-            </svg>
-          </div>
-          <span className="text-white font-semibold tracking-tight text-lg">
-            byLiGG
-          </span>
+        <a href="/">
+          <LogoWordmark fontSize={26} variant="gradient" />
         </a>
 
         {/* Links */}

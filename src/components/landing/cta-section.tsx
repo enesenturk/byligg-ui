@@ -36,10 +36,10 @@ export function CtaSection() {
               {t.cta.badge}
             </div>
 
-            <h2 style={{ fontSize: "clamp(2rem, 4vw, 2.75rem)", fontWeight: 800, marginBottom: "1rem", color: "#fff", lineHeight: 1.2 }}>
+            <h2 style={{ fontSize: "clamp(2rem, 4vw, 2.75rem)", fontWeight: 800, marginBottom: "1rem", color: "var(--theme-text-1)", lineHeight: 1.2 }}>
               {t.cta.title}
             </h2>
-            <p style={{ color: "rgba(180,200,255,0.6)", fontSize: "1.1rem", maxWidth: 500, margin: "0 auto 2rem" }}>
+            <p style={{ color: "var(--theme-text-2)", fontSize: "1.1rem", maxWidth: 500, margin: "0 auto 2rem" }}>
               {t.cta.subtitle}
             </p>
 
@@ -57,12 +57,12 @@ export function CtaSection() {
               </a>
               <a href="/login" style={{
                 padding: "1rem 2.5rem", borderRadius: 8,
-                border: "1px solid rgba(255,255,255,0.15)",
-                color: "rgba(180,200,255,0.8)", fontWeight: 600, fontSize: "1rem",
+                border: "1px solid var(--theme-border-strong)",
+                color: "var(--theme-text-2)", fontWeight: 600, fontSize: "1rem",
                 textDecoration: "none", transition: "all 0.3s",
               }}
                 onMouseEnter={e => { (e.currentTarget as HTMLAnchorElement).style.borderColor = "var(--theme-accent)"; (e.currentTarget as HTMLAnchorElement).style.color = "var(--theme-accent)"; }}
-                onMouseLeave={e => { (e.currentTarget as HTMLAnchorElement).style.borderColor = "rgba(255,255,255,0.15)"; (e.currentTarget as HTMLAnchorElement).style.color = "rgba(180,200,255,0.8)"; }}
+                onMouseLeave={e => { (e.currentTarget as HTMLAnchorElement).style.borderColor = "var(--theme-border-strong)"; (e.currentTarget as HTMLAnchorElement).style.color = "var(--theme-text-2)"; }}
               >
                 {t.cta.loginLabel} {t.nav.login}
               </a>

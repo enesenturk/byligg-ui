@@ -1,4 +1,9 @@
 @import "tailwindcss";
+
+/* Hero logo responsive scaling */
+.hero-logo { transform-origin: center top; }
+@media (max-width: 768px) { .hero-logo { transform: scale(0.6); } }
+@media (min-width: 769px) and (max-width: 1024px) { .hero-logo { transform: scale(0.8); } }
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
 
@@ -54,67 +59,90 @@
 :root,
 [data-theme="sapphire"] {
   /* Safir Gece – mavi + mor, lacivert arka plan */
-  --theme-accent:     #3b82f6;
-  --theme-accent-rgb: 59,130,246;
+  --theme-accent:       #3b82f6;
+  --theme-accent-rgb:   59,130,246;
   --theme-accent-2:     #8b5cf6;
   --theme-accent-2-rgb: 139,92,246;
-  --theme-bg-1:     #020B1A;
-  --theme-bg-1-rgb: 2,11,26;
-  --theme-bg-2:     #041225;
-  --theme-bg-card:  #0D1B2E;
-  --theme-bg-hover: #0F2035;
+  --theme-bg-1:         #020B1A;
+  --theme-bg-1-rgb:     2,11,26;
+  --theme-bg-2:         #041225;
+  --theme-bg-card:      #0D1B2E;
+  --theme-bg-hover:     #0F2035;
+  --theme-bg-hero:      #020B1A;
+  --theme-bg-hero-rgb:  2,11,26;
+  --theme-text-1:       #ffffff;
+  --theme-text-2:       rgba(180,200,255,0.7);
+  --theme-text-3:       rgba(180,200,255,0.45);
+  --theme-border:       rgba(255,255,255,0.1);
+  --theme-border-subtle: rgba(255,255,255,0.07);
+  --theme-border-strong: rgba(255,255,255,0.15);
+  --theme-nav-opacity:  0.4;
 }
 
-[data-theme="nature"] {
-  /* Kıyı – cyan + taze yeşil, koyu deniz arka plan */
-  --theme-accent:     #22d3ee;
-  --theme-accent-rgb: 34,211,238;
-  --theme-accent-2:     #4ade80;
-  --theme-accent-2-rgb: 74,222,128;
-  --theme-bg-1:     #020D0F;
-  --theme-bg-1-rgb: 2,13,15;
-  --theme-bg-2:     #04151A;
-  --theme-bg-card:  #081F26;
-  --theme-bg-hover: #0C2830;
+[data-theme="ivory"] {
+  /* Kırık Beyaz – soft yeşil vurgu, sıcak kırık beyaz arka plan */
+  --theme-accent:       #4A9478;
+  --theme-accent-rgb:   74,148,120;
+  --theme-accent-2:     #74C9A5;
+  --theme-accent-2-rgb: 116,201,165;
+  --theme-bg-1:         #EEF4F0;
+  --theme-bg-1-rgb:     238,244,240;
+  --theme-bg-2:         #E4EEE8;
+  --theme-bg-card:      #F5FAF7;
+  --theme-bg-hover:     #D9E7DF;
+  --theme-bg-hero:      #091A12;
+  --theme-bg-hero-rgb:  9,26,18;
+  --theme-text-1:       #1A1A1A;
+  --theme-text-2:       #374151;
+  --theme-text-3:       #6B7280;
+  --theme-border:       rgba(0,0,0,0.12);
+  --theme-border-subtle: rgba(0,0,0,0.07);
+  --theme-border-strong: rgba(0,0,0,0.18);
+  --theme-nav-opacity:  0.88;
 }
 
-[data-theme="atletik"] {
-  /* Atletik – turuncu + gümüş beyaz, lacivert arka plan */
-  --theme-accent:     #f97316;
-  --theme-accent-rgb: 249,115,22;
-  --theme-accent-2:     #cbd5e1;
-  --theme-accent-2-rgb: 203,213,225;
-  --theme-bg-1:     #03070F;
-  --theme-bg-1-rgb: 3,7,15;
-  --theme-bg-2:     #060D1E;
-  --theme-bg-card:  #0C152C;
-  --theme-bg-hover: #111E3A;
+[data-theme="anthracite"] {
+  /* Antrasit – soft teal vurgu, ılık gri zemin */
+  --theme-accent:       #5BBFB5;
+  --theme-accent-rgb:   91,191,181;
+  --theme-accent-2:     #A594F9;
+  --theme-accent-2-rgb: 165,148,249;
+  --theme-bg-1:         #252830;
+  --theme-bg-1-rgb:     37,40,48;
+  --theme-bg-2:         #2E3240;
+  --theme-bg-card:      #363A4A;
+  --theme-bg-hover:     #3F4356;
+  --theme-bg-hero:      #252830;
+  --theme-bg-hero-rgb:  37,40,48;
+  --theme-text-1:       #F0F2FA;
+  --theme-text-2:       rgba(210,215,240,0.75);
+  --theme-text-3:       rgba(170,180,215,0.5);
+  --theme-border:       rgba(255,255,255,0.1);
+  --theme-border-subtle: rgba(255,255,255,0.07);
+  --theme-border-strong: rgba(255,255,255,0.15);
+  --theme-nav-opacity:  0.4;
 }
 
-[data-theme="midnight"] {
-  /* Gece Moru – mor + kırık beyaz, siyah arka plan */
-  --theme-accent:     #9333ea;
-  --theme-accent-rgb: 147,51,234;
-  --theme-accent-2:     #e2e8f0;
-  --theme-accent-2-rgb: 226,232,240;
-  --theme-bg-1:     #06040C;
-  --theme-bg-1-rgb: 6,4,12;
-  --theme-bg-2:     #0C0918;
-  --theme-bg-card:  #130E22;
-  --theme-bg-hover: #1A122C;
-}
-
-[data-theme="ela"] {
-  /* Ela – lila + açık yeşil, sıcak zeytin arka plan */
-  --theme-accent:     #c084fc;
-  --theme-accent-rgb: 192,132,252;
-  --theme-accent-2:     #a3e635;
-  --theme-accent-2-rgb: 163,230,53;
-  --theme-bg-1:     #080807;
-  --theme-bg-1-rgb: 8,8,7;
-  --theme-bg-2:     #0F0E0C;
-  --theme-bg-card:  #171613;
-  --theme-bg-hover: #1E1C18;
+[data-theme="linen"] {
+  /* Keten – koyu violet vurgu, pembe + lila + beyaz arka plan */
+  --theme-accent:       #7C3AED;
+  --theme-accent-rgb:   124,58,237;
+  --theme-accent-2:     #A855F7;
+  --theme-accent-2-rgb: 168,85,247;
+  --theme-bg-1:         #FCE8F4;
+  --theme-bg-1-rgb:     252,232,244;
+  --theme-bg-2:         #EEE0FF;
+  --theme-bg-card:      #FFFFFF;
+  --theme-bg-hover:     #E6C8F0;
+  --theme-bg-hero:      #1C0A35;
+  --theme-bg-hero-rgb:  28,10,53;
+  --theme-text-1:       #1A0A2E;
+  --theme-text-2:       #5B3A6B;
+  --theme-text-3:       #9B7AAD;
+  --theme-border:       rgba(100,50,130,0.13);
+  --theme-border-subtle: rgba(100,50,130,0.07);
+  --theme-border-strong: rgba(100,50,130,0.20);
+  --theme-nav-opacity:  0.92;
 }
 
 :root {

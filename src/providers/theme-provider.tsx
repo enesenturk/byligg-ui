@@ -23,7 +23,7 @@ function applyTheme(id: ThemeId, teamAccent: string | null) {
   const root = document.documentElement;
   root.setAttribute("data-theme", id);
 
-  if (id === "sapphire" || !THEMES.find((t) => t.id === id)) {
+  if (!teamAccent) {
     // CSS handles it via [data-theme] selectors — remove inline overrides
     root.style.removeProperty("--theme-accent");
     root.style.removeProperty("--theme-accent-rgb");

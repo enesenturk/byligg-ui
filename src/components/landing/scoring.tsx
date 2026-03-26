@@ -60,14 +60,14 @@ export function Scoring() {
       pts: 0,
       label: t.scoring.wrong,
       desc: t.scoring.wrongDesc,
-      color: "text-zinc-600",
-      bg: "bg-[#0A1930]/50 border-zinc-700/30",
+      color: "text-zinc-500",
+      bg: "border-zinc-300/30",
       example: "3–0 ✗ 0–2",
     },
   ];
 
   return (
-    <section className="bg-[#020B1A] py-24 px-5">
+    <section className="py-24 px-5" style={{ background: "var(--theme-bg-1)" }}>
       {/* Top divider */}
       <div
         className="mx-auto max-w-7xl h-px mb-24 opacity-20"
@@ -79,10 +79,10 @@ export function Scoring() {
       <div className="mx-auto max-w-7xl">
         {/* Header */}
         <div className="text-center mb-16 max-w-2xl mx-auto">
-          <h2 className="text-3xl sm:text-4xl font-black tracking-tight text-white mb-4">
+          <h2 className="text-3xl sm:text-4xl font-black tracking-tight mb-4" style={{ color: "var(--theme-text-1)" }}>
             {t.scoring.title}
           </h2>
-          <p className="text-zinc-400 text-base sm:text-lg leading-relaxed">
+          <p className="text-base sm:text-lg leading-relaxed" style={{ color: "var(--theme-text-2)" }}>
             {t.scoring.subtitle}
           </p>
         </div>
@@ -100,7 +100,7 @@ export function Scoring() {
                   {tier.pts}
                   <span className="text-base font-semibold ml-0.5">p</span>
                 </span>
-                <span className="text-[10px] font-mono text-zinc-600 bg-[#051228]/60 px-2 py-0.5 rounded-md">
+                <span className="text-[10px] font-mono px-2 py-0.5 rounded-md" style={{ color: "var(--theme-text-3)", background: "var(--theme-border-subtle)" }}>
                   {tier.example}
                 </span>
               </div>
@@ -115,7 +115,7 @@ export function Scoring() {
         </div>
 
         {/* Derbi multiplier note */}
-        <p className="mt-6 text-center text-xs text-zinc-600">
+        <p className="mt-6 text-center text-xs" style={{ color: "var(--theme-text-3)" }}>
           {t.scoring.multiplierNote}
         </p>
       </div>
