@@ -130,7 +130,7 @@ export function RegisterModal({ open, onClose, onSwitchToLogin }: RegisterModalP
 
     try {
       await apiClient.post(
-        '/dummyapi',
+        '/api/user/register',
         {
           displayName: form.displayName.trim(),
           username: form.username,
