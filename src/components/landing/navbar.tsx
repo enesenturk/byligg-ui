@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Link from "next/link";
 import { useI18n } from "@/providers/i18n-provider";
 import { useTheme } from "@/providers/theme-provider";
 import { LogoWordmark } from "@/components/brand/logo-wordmark";
@@ -50,9 +51,9 @@ export function Navbar({ onOpenRegister }: NavbarProps) {
     >
       <div style={{ maxWidth: 1400, margin: "0 auto", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
         {/* Logo */}
-        <a href="/" style={{ textDecoration: "none" }}>
+        <Link href="/" style={{ textDecoration: "none" }}>
           <LogoWordmark fontSize={26} variant="gradient" />
-        </a>
+        </Link>
 
         {/* Nav links */}
         <ul style={{ display: "flex", alignItems: "center", gap: "2.5rem", listStyle: "none", margin: 0, padding: 0 }}
@@ -143,12 +144,13 @@ export function Navbar({ onOpenRegister }: NavbarProps) {
           </div>
 
           {/* Login */}
-          <a href="/login"
-            style={{ padding: "0.6rem 1.25rem", borderRadius: 8, border: "none", background: "transparent", color: "var(--theme-text-2)", cursor: "pointer", fontSize: "0.9rem", fontWeight: 600, textDecoration: "none", transition: "color 0.3s", minWidth: 90, textAlign: "center" }}
+          <Link
+            href="/login"
             className="hidden sm:block"
+            style={{ padding: "0.6rem 1.25rem", borderRadius: 8, border: "none", background: "transparent", color: "var(--theme-text-2)", cursor: "pointer", fontSize: "0.9rem", fontWeight: 600, textDecoration: "none", transition: "color 0.3s", minWidth: 90, textAlign: "center" }}
           >
             {t.nav.login}
-          </a>
+          </Link>
 
           {/* CTA */}
           <button

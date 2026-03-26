@@ -1,6 +1,7 @@
 ﻿"use client";
 
 import { useState, useEffect } from "react";
+import Link from "next/link";
 import { LogoWordmark } from "@/components/brand/logo-wordmark";
 
 const NAV_LINKS = [
@@ -29,9 +30,9 @@ export function Navbar() {
     >
       <nav className="mx-auto max-w-7xl px-6 h-16 flex items-center justify-between">
         {/* Logo */}
-        <a href="/">
+        <Link href="/">
           <LogoWordmark fontSize={26} variant="gradient" />
-        </a>
+        </Link>
 
         {/* Links */}
         <ul className="hidden md:flex items-center gap-1">

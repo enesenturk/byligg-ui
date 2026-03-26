@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import React from "react";
 
 interface LogoWordmarkProps {
@@ -72,7 +73,14 @@ export function LogoWordmark({ fontSize = 24, variant = "gradient" }: LogoWordma
             pointerEvents: "none",
           }}
         >
-          <img src="/ball-icon.png" width={ballWidth} height={ballHeight} alt="" style={{ display: "block", maxWidth: "none" }} />
+          <Image
+            src="/ball-icon.png"
+            width={ballWidth}
+            height={ballHeight}
+            alt="Ball icon"
+            style={{ display: "block", maxWidth: "none" }}
+            priority
+          />
         </span>
       </span>
 

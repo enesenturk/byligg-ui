@@ -2,6 +2,8 @@
 
 import { useState, useEffect, useRef } from "react";
 import { useI18n } from "@/providers/i18n-provider";
+import { useAuth } from "@/providers/auth-provider";
+import { apiClient } from "@/lib/api";
 import { LogoWordmark } from "@/components/brand/logo-wordmark";
 
 interface RegisterModalProps {
@@ -43,6 +45,7 @@ function EyeIcon({ visible }: { visible: boolean }) {
 
 export function RegisterModal({ open, onClose, onSwitchToLogin }: RegisterModalProps) {
   const { t, lang } = useI18n();
+  const { login } = useAuth();
 
   const [form, setForm] = useState<FormState>({
     displayName: "",
@@ -59,13 +62,21 @@ export function RegisterModal({ open, onClose, onSwitchToLogin }: RegisterModalP
 
   const firstInputRef = useRef<HTMLInputElement>(null);
 
+  const resetForm = () => {
+    setForm({ displayName: "", username: "", email: "", password: "", confirmPassword: "" });
+    setErrors({});
+    setLoading(false);
+  };
+
+  const onCloseInternal = () => {
+    resetForm();
+    onClose();
+  };
+
   useEffect(() => {
-    if (open) {
-      setForm({ displayName: "", username: "", email: "", password: "", confirmPassword: "" });
-      setErrors({});
-      setLoading(false);
-      setTimeout(() => firstInputRef.current?.focus(), 80);
-    }
+    if (!open) return;
+    const timeoutId = window.setTimeout(() => firstInputRef.current?.focus(), 80);
+    return () => window.clearTimeout(timeoutId);
   }, [open]);
 
   useEffect(() => {
@@ -117,47 +128,41 @@ export function RegisterModal({ open, onClose, onSwitchToLogin }: RegisterModalP
     const languagePreference = lang === "tr" ? "tr-TR" : "en-US";
 
     try {
-      const registerRes = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/user/register`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
+      await apiClient.post(
+        '/api/user/register',
+        {
           displayName: form.displayName.trim(),
           username: form.username,
           email: form.email,
           password: form.password,
           languagePreference,
-        }),
-      });
+        },
+        lang,
+      );
 
-      if (!registerRes.ok) {
-        const data = await registerRes.json();
-        setErrors({ general: data?.message ?? (lang === "tr" ? "Bir hata oluştu" : "An error occurred") });
-        setLoading(false);
-        return;
-      }
+      const loginData = await apiClient.post<{ token?: string; responseModel?: { token?: string } }>(
+        '/api/user/login',
+        {
+          username: form.username,
+          password: form.password,
+        },
+        lang,
+      );
 
-      const loginRes = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/user/login`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username: form.username, password: form.password }),
-      });
-
-      if (!loginRes.ok) {
-        const data = await loginRes.json();
-        setErrors({ general: data?.message ?? (lang === "tr" ? "Giriş yapılamadı" : "Login failed") });
-        setLoading(false);
-        return;
-      }
-
-      const loginData = await loginRes.json();
-      const token: string = loginData?.responseModel?.token ?? loginData?.token ?? "";
+      const token = loginData.responseModel?.token ?? loginData.token;
       if (token) {
-        document.cookie = `byligg_token=${token}; path=/; max-age=${60 * 60 * 24 * 30}; SameSite=Lax`;
+        login(token);
+      } else {
+        setErrors({ general: lang === 'tr' ? 'Token alınamadı' : 'Could not get token' });
+        setLoading(false);
       }
-
-      window.location.href = "/dashboard";
-    } catch {
-      setErrors({ general: lang === "tr" ? "Sunucuya bağlanılamadı" : "Could not connect to server" });
+    } catch (error) {
+      // ApiClient already handles toast messages, but we still show inline error for form
+      if (error instanceof Error) {
+        setErrors({ general: error.message });
+      } else {
+        setErrors({ general: lang === 'tr' ? 'Sunucuya bağlanılamadı' : 'Could not connect to server' });
+      }
       setLoading(false);
     }
   }
@@ -210,7 +215,7 @@ export function RegisterModal({ open, onClose, onSwitchToLogin }: RegisterModalP
     <>
       {/* Backdrop */}
       <div
-        onClick={onClose}
+        onClick={onCloseInternal}
         style={{
           position: "fixed", inset: 0, zIndex: 2000,
           background: "rgba(0,0,0,0.7)",
@@ -238,7 +243,7 @@ export function RegisterModal({ open, onClose, onSwitchToLogin }: RegisterModalP
         >
           {/* Close */}
           <button
-            onClick={onClose}
+            onClick={onCloseInternal}
             style={{
               position: "absolute", top: 16, right: 16,
               width: 32, height: 32, borderRadius: 8,

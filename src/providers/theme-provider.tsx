@@ -40,20 +40,20 @@ function applyTheme(id: ThemeId, teamAccent: string | null) {
 }
 
 export function ThemeProvider({ children }: { children: ReactNode }) {
-  const [theme, setThemeState] = useState<ThemeId>(DEFAULT_THEME);
-  const [teamAccent, setTeamAccentState] = useState<string | null>(null);
+  const [theme, setThemeState] = useState<ThemeId>(() => {
+    if (typeof window === 'undefined') return DEFAULT_THEME;
+    const saved = localStorage.getItem('lx-theme') as ThemeId | null;
+    return saved && THEMES.some((t) => t.id === saved) ? saved : DEFAULT_THEME;
+  });
 
-  // Restore persisted theme on mount
+  const [teamAccent, setTeamAccentState] = useState<string | null>(() => {
+    if (typeof window === 'undefined') return null;
+    return localStorage.getItem('lx-team-accent');
+  });
+
   useEffect(() => {
-    const saved = localStorage.getItem("lx-theme") as ThemeId | null;
-    const savedTeam = localStorage.getItem("lx-team-accent");
-    const resolvedTheme =
-      saved && THEMES.some((t) => t.id === saved) ? saved : DEFAULT_THEME;
-
-    setThemeState(resolvedTheme);
-    if (savedTeam) setTeamAccentState(savedTeam);
-    applyTheme(resolvedTheme, savedTeam);
-  }, []);
+    applyTheme(theme, teamAccent);
+  }, [theme, teamAccent]);
 
   const setTheme = (id: ThemeId) => {
     setThemeState(id);
