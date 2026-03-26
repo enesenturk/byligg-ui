@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from "react";
 import { useI18n } from "@/providers/i18n-provider";
 import { useAuth } from "@/providers/auth-provider";
 import { apiClient } from "@/lib/api";
+import { getUiMessage } from "@/lib/constants/language";
 import { LogoWordmark } from "@/components/brand/logo-wordmark";
 
 interface RegisterModalProps {
@@ -129,7 +130,7 @@ export function RegisterModal({ open, onClose, onSwitchToLogin }: RegisterModalP
 
     try {
       await apiClient.post(
-        '/api/user/register',
+        '/dummyapi',
         {
           displayName: form.displayName.trim(),
           username: form.username,
@@ -153,7 +154,7 @@ export function RegisterModal({ open, onClose, onSwitchToLogin }: RegisterModalP
       if (token) {
         login(token);
       } else {
-        setErrors({ general: lang === 'tr' ? 'Token alınamadı' : 'Could not get token' });
+        setErrors({ general: getUiMessage('tokenNotReceived', lang) });
         setLoading(false);
       }
     } catch (error) {
@@ -161,7 +162,7 @@ export function RegisterModal({ open, onClose, onSwitchToLogin }: RegisterModalP
       if (error instanceof Error) {
         setErrors({ general: error.message });
       } else {
-        setErrors({ general: lang === 'tr' ? 'Sunucuya bağlanılamadı' : 'Could not connect to server' });
+        setErrors({ general: getUiMessage('serverConnectionFailed', lang) });
       }
       setLoading(false);
     }

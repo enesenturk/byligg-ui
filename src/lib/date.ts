@@ -1,5 +1,5 @@
 import { useI18n } from '@/providers/i18n-provider';
-import { Language, toLocale } from '@/lib/constants/language';
+import { Language, toLocale, getDateTimeMessage, getCurrencyCode, getLocaleString } from '@/lib/constants/language';
 
 // Backend always sends UTC DateTime strings in ISO format
 // Frontend converts to user's local timezone and formats according to locale
@@ -43,7 +43,7 @@ export function formatTime(date: Date | string, locale: Language = 'tr'): string
     minute: '2-digit',
   };
 
-  return d.toLocaleTimeString(locale === 'tr' ? 'tr-TR' : 'en-US', options);
+  return d.toLocaleTimeString(getLocaleString(locale), options);
 }
 
 export function formatRelativeTime(date: Date | string, locale: Language = 'tr'): string {
@@ -55,15 +55,15 @@ export function formatRelativeTime(date: Date | string, locale: Language = 'tr')
   const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
 
   if (locale === 'tr') {
-    if (diffMinutes < 1) return 'Şimdi';
-    if (diffMinutes < 60) return `${diffMinutes} dakika önce`;
-    if (diffHours < 24) return `${diffHours} saat önce`;
-    return `${diffDays} gün önce`;
+    if (diffMinutes < 1) return getDateTimeMessage('now', locale);
+    if (diffMinutes < 60) return `${diffMinutes} ${getDateTimeMessage('minutesAgo', locale)}`;
+    if (diffHours < 24) return `${diffHours} ${getDateTimeMessage('hoursAgo', locale)}`;
+    return `${diffDays} ${getDateTimeMessage('daysAgo', locale)}`;
   } else {
-    if (diffMinutes < 1) return 'Now';
-    if (diffMinutes < 60) return `${diffMinutes} minutes ago`;
-    if (diffHours < 24) return `${diffHours} hours ago`;
-    return `${diffDays} days ago`;
+    if (diffMinutes < 1) return getDateTimeMessage('now', locale);
+    if (diffMinutes < 60) return `${diffMinutes} ${getDateTimeMessage('minutesAgo', locale)}`;
+    if (diffHours < 24) return `${diffHours} ${getDateTimeMessage('hoursAgo', locale)}`;
+    return `${diffDays} ${getDateTimeMessage('daysAgo', locale)}`;
   }
 }
 
@@ -87,6 +87,6 @@ export function formatNumber(num: number, locale: Language = 'tr'): string {
 export function formatCurrency(amount: number, locale: Language = 'tr'): string {
   return amount.toLocaleString(toLocale(locale), {
     style: 'currency',
-    currency: locale === 'tr' ? 'TRY' : 'USD',
+    currency: getCurrencyCode(locale),
   });
 }

@@ -45,6 +45,42 @@ export const API_ERROR_MESSAGES: Record<Language, Record<string, string>> = {
   },
 };
 
-export function getApiErrorMessage(key: keyof typeof API_ERROR_MESSAGES.tr, lang: Language): string {
-  return API_ERROR_MESSAGES[lang][key];
+// Date/Time Messages
+export const DATE_TIME_MESSAGES: Record<Language, Record<string, string>> = {
+  tr: {
+    now: 'Şimdi',
+    minutesAgo: 'dakika önce',
+    hoursAgo: 'saat önce',
+    daysAgo: 'gün önce',
+  },
+  en: {
+    now: 'Now',
+    minutesAgo: 'minutes ago',
+    hoursAgo: 'hours ago',
+    daysAgo: 'days ago',
+  },
+};
+
+// General UI Messages
+export const UI_MESSAGES: Record<Language, Record<string, string>> = {
+  tr: {
+    tokenNotReceived: 'Token alınamadı',
+    serverConnectionFailed: 'Sunucuya bağlanılamadı',
+  },
+  en: {
+    tokenNotReceived: 'Could not get token',
+    serverConnectionFailed: 'Could not connect to server',
+  },
+};
+
+export function getDateTimeMessage(key: keyof typeof DATE_TIME_MESSAGES.tr, lang: Language): string {
+  return DATE_TIME_MESSAGES[lang][key];
+}
+
+export function getCurrencyCode(lang: Language): string {
+  return lang === 'tr' ? 'TRY' : 'USD';
+}
+
+export function getLocaleString(lang: Language): string {
+  return lang === 'tr' ? 'tr-TR' : 'en-US';
 }
