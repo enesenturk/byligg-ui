@@ -51,7 +51,7 @@ export function Navbar({ onOpenRegister }: NavbarProps) {
     >
       <div style={{ maxWidth: 1400, margin: "0 auto", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
         {/* Logo */}
-        <Link href="/" style={{ textDecoration: "none" }} onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: "smooth" }); }}>
+        <Link href="/" style={{ textDecoration: "none" }} onClick={(e) => { e.preventDefault(); window.history.replaceState(null, "", window.location.pathname); window.scrollTo({ top: 0, behavior: "smooth" }); }}>
           <LogoWordmark fontSize={26} variant="gradient" />
         </Link>
 
