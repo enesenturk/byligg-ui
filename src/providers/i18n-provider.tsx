@@ -4,11 +4,10 @@ import {
   createContext,
   useContext,
   useState,
-  useEffect,
   type ReactNode,
 } from "react";
 import { tr, en, type Lang, type Translations } from "@/lib/i18n";
-import { isSupportedLanguage, parseLocale } from "@/lib/constants/language";
+import { setCookie } from "@/lib/utils";
 
 interface I18nCtx {
   lang: Lang;
@@ -18,21 +17,15 @@ interface I18nCtx {
 
 const I18nContext = createContext<I18nCtx | null>(null);
 
-export function I18nProvider({ children }: { children: ReactNode }) {
-  const [lang, setLangState] = useState<Lang>('tr');
+const LANG_COOKIE_MAX_AGE = 60 * 60 * 24 * 365;
 
-  useEffect(() => {
-    const saved = localStorage.getItem('lx-lang') as Lang | null;
-    if (saved && isSupportedLanguage(saved)) {
-      setLangState(saved);
-      return;
-    }
-    setLangState(parseLocale(navigator.language.toLowerCase()));
-  }, []);
+export function I18nProvider({ children, initialLang }: { children: ReactNode; initialLang: Lang }) {
+  const [lang, setLangState] = useState<Lang>(initialLang);
 
   const setLang = (l: Lang) => {
     setLangState(l);
     localStorage.setItem("lx-lang", l);
+    setCookie("lx-lang", l, LANG_COOKIE_MAX_AGE);
   };
 
   return (

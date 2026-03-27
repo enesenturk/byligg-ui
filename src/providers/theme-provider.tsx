@@ -41,8 +41,8 @@ function applyTheme(id: ThemeId, teamAccent: string | null) {
 export function ThemeProvider({ children }: { children: ReactNode }) {
   const [theme, setThemeState] = useState<ThemeId>(() => {
     if (typeof window === 'undefined') return DEFAULT_THEME;
-    const saved = localStorage.getItem('lx-theme') as ThemeId | null;
-    return saved && THEMES.some((t) => t.id === saved) ? saved : DEFAULT_THEME;
+    const fromAttr = document.documentElement.getAttribute('data-theme') as ThemeId | null;
+    return fromAttr && THEMES.some((t) => t.id === fromAttr) ? fromAttr : DEFAULT_THEME;
   });
 
   const [teamAccent, setTeamAccentState] = useState<string | null>(() => {
