@@ -121,6 +121,11 @@ class ApiClient {
           const businessMessage = maybePayload.message || maybePayload.error || getMessage('businessRuleError', resolvedLang);
           throw new ApiError(400, businessMessage);
         }
+        // Check for BaseResponseDto Type
+        const baseResponse = data as { Type?: string; Message?: string };
+        if (baseResponse.Type === 'E' || baseResponse.Type === 'SB') {
+          throw new ApiError(400, baseResponse.Message || getMessage('businessRuleError', resolvedLang));
+        }
       }
 
       return data as T;
