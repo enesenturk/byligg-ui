@@ -74,7 +74,7 @@ export function LogoWordmark({ fontSize = 24, variant = "gradient" }: LogoWordma
           }}
         >
           <Image
-            src="/ball-icon.png"
+            src="/images/ball-icon.png"
             width={ballWidth}
             height={ballHeight}
             alt="Ball icon"

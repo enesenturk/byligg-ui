@@ -63,7 +63,7 @@ export function Hero({ onOpenRegister }: HeroProps) {
   const backgroundStyle = {
     position: "absolute" as const,
     inset: 0,
-    backgroundImage: "url('/stadium.jpg')",
+    backgroundImage: "url('/images/stadium.jpg')",
     backgroundSize: "cover",
     backgroundPosition: "center",
     filter: "brightness(0.3) saturate(0.6)",
