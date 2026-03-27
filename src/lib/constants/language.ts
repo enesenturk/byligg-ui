@@ -11,6 +11,10 @@ export function isSupportedLanguage(value: unknown): value is Language {
   return value === 'tr' || value === 'en';
 }
 
+export function getSupportedLanguage(text: string): Language {
+  return text.toLowerCase().startsWith('tr') ? 'tr' : 'en';
+}
+
 export function toLocale(value: Language): string {
   return LANGUAGE_MAP[value];
 }

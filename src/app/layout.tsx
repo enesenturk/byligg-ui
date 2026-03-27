@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import { cookies } from "next/headers";
+import { cookies, headers } from "next/headers";
+import { isSupportedLanguage, getSupportedLanguage } from "@/lib/constants/language";
 import "./globals.css";
 import { ThemeProvider } from "@/providers/theme-provider";
 import { I18nProvider } from "@/providers/i18n-provider";
@@ -30,7 +31,7 @@ const themeInitScript = `
 try {
   var VALID = ["sapphire","ivory","anthracite","linen"];
   var t = localStorage.getItem("lx-theme");
-  if (t && VALID.indexOf(t) !== -1) document.documentElement.setAttribute("data-theme", t);
+  document.documentElement.setAttribute("data-theme", (t && VALID.indexOf(t) !== -1) ? t : "sapphire");
   var a = localStorage.getItem("lx-team-accent");
   if (a && /^#[0-9a-fA-F]{6}$/.test(a)) {
     document.documentElement.style.setProperty("--theme-accent", a);
@@ -45,9 +46,10 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const cookieStore = await cookies();
-  const rawLang = cookieStore.get("lx-lang")?.value;
-  const initialLang: Lang = rawLang === "en" ? "en" : "tr";
+  const [cookieStore, headerStore] = await Promise.all([cookies(), headers()]);
+  const savedLang = cookieStore.get("lx-lang")?.value;
+  const browserLang = getSupportedLanguage((headerStore.get("accept-language") ?? "").split(",")[0]);
+  const initialLang: Lang = isSupportedLanguage(savedLang) ? savedLang : browserLang;
 
   return (
     <html
