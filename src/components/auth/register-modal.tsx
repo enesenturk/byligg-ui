@@ -144,7 +144,7 @@ export function RegisterModal({ open, onClose, onSwitchToLogin }: RegisterModalP
         lang,
       );
 
-      const loginData = await apiClient.post<{ token?: string; responseModel?: { token?: string } }>(
+      const loginData = await apiClient.post<{ token?: string; responseModel?: { Token?: string } }>(
         '/api/user/login',
         {
           username: form.username,
@@ -153,7 +153,7 @@ export function RegisterModal({ open, onClose, onSwitchToLogin }: RegisterModalP
         lang,
       );
 
-      const token = loginData.responseModel?.token ?? loginData.token;
+      const token = loginData.responseModel?.Token ?? loginData.token;
       if (token) {
         login(token);
       } else {
