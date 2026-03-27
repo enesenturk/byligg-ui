@@ -21,61 +21,133 @@ export function parseLocale(locale: string): Language {
   return 'tr';
 }
 
-// API Error Messages - Similar to .NET resx files
-export const API_ERROR_MESSAGES: Record<Language, Record<string, string>> = {
-  tr: {
-    invalidRequest: 'Geçersiz istek',
-    sessionExpired: 'Oturum süreniz doldu, lütfen tekrar giriş yapın',
-    permissionDenied: 'Bir hata oluştu. Lütfen daha sonra tekrar deneyiniz.',
-    resourceNotFound: 'İstenen kaynak bulunamadı',
-    serverError: 'Sunucu hatası, lütfen daha sonra tekrar deneyin',
-    networkError: 'İnternet bağlantınızı kontrol edin',
-    businessRuleError: 'İş kuralı hatası',
-    unexpectedError: 'Beklenmeyen bir hata oluştu',
+// UI Message Keys - Type-safe message identifiers
+export type UIMessageKey =
+  // API Error Messages
+  | 'invalidRequest'
+  | 'sessionExpired'
+  | 'permissionDenied'
+  | 'resourceNotFound'
+  | 'serverError'
+  | 'networkError'
+  | 'businessRuleError'
+  | 'unexpectedError'
+  // Date/Time Messages
+  | 'now'
+  | 'minutesAgo'
+  | 'hoursAgo'
+  | 'daysAgo'
+  // General UI Messages
+  | 'tokenNotReceived'
+  | 'serverConnectionFailed';
+
+
+// Single source of truth for all UI messages
+export const uiMessages: Record<UIMessageKey, Record<Language, string>> = {
+  // API Error Messages
+  invalidRequest: {
+    tr: 'Geçersiz istek',
+    en: 'Invalid request',
   },
-  en: {
-    invalidRequest: 'Invalid request',
-    sessionExpired: 'Your session has expired, please log in again',
-    permissionDenied: 'An error occurred. Please try again later.',
-    resourceNotFound: 'Requested resource not found',
-    serverError: 'Server error, please try again later',
-    networkError: 'Please check your internet connection',
-    businessRuleError: 'Business rule error',
-    unexpectedError: 'An unexpected error occurred',
+  sessionExpired: {
+    tr: 'Oturum süreniz doldu, lütfen tekrar giriş yapın',
+    en: 'Your session has expired, please log in again',
+  },
+  permissionDenied: {
+    tr: 'Bir hata oluştu. Lütfen daha sonra tekrar deneyiniz.',
+    en: 'An error occurred. Please try again later.',
+  },
+  resourceNotFound: {
+    tr: 'İstenen kaynak bulunamadı',
+    en: 'Requested resource not found',
+  },
+  serverError: {
+    tr: 'Sunucu hatası, lütfen daha sonra tekrar deneyin',
+    en: 'Server error, please try again later',
+  },
+  networkError: {
+    tr: 'İnternet bağlantınızı kontrol edin',
+    en: 'Please check your internet connection',
+  },
+  businessRuleError: {
+    tr: 'İş kuralı hatası',
+    en: 'Business rule error',
+  },
+  unexpectedError: {
+    tr: 'Beklenmeyen bir hata oluştu',
+    en: 'An unexpected error occurred',
+  },
+  // Date/Time Messages
+  now: {
+    tr: 'Şimdi',
+    en: 'Now',
+  },
+  minutesAgo: {
+    tr: 'dakika önce',
+    en: 'minutes ago',
+  },
+  hoursAgo: {
+    tr: 'saat önce',
+    en: 'hours ago',
+  },
+  daysAgo: {
+    tr: 'gün önce',
+    en: 'days ago',
+  },
+  // General UI Messages
+  tokenNotReceived: {
+    tr: 'Token alınamadı',
+    en: 'Could not get token',
+  },
+  serverConnectionFailed: {
+    tr: 'Sunucuya bağlanılamadı',
+    en: 'Could not connect to server',
   },
 };
 
-// Date/Time Messages
-export const DATE_TIME_MESSAGES: Record<Language, Record<string, string>> = {
-  tr: {
-    now: 'Şimdi',
-    minutesAgo: 'dakika önce',
-    hoursAgo: 'saat önce',
-    daysAgo: 'gün önce',
-  },
-  en: {
-    now: 'Now',
-    minutesAgo: 'minutes ago',
-    hoursAgo: 'hours ago',
-    daysAgo: 'days ago',
-  },
-};
 
-// General UI Messages
-export const UI_MESSAGES: Record<Language, Record<string, string>> = {
-  tr: {
-    tokenNotReceived: 'Token alınamadı',
-    serverConnectionFailed: 'Sunucuya bağlanılamadı',
-  },
-  en: {
-    tokenNotReceived: 'Could not get token',
-    serverConnectionFailed: 'Could not connect to server',
-  },
-};
-
-export function getDateTimeMessage(key: keyof typeof DATE_TIME_MESSAGES.tr, lang: Language): string {
-  return DATE_TIME_MESSAGES[lang][key];
+/**
+ * Gets a localized message based on the key and language
+ * @param key - The message key
+ * @param lang - The target language
+ * @returns The localized message string
+ */
+export function getMessage(key: UIMessageKey, lang: Language): string {
+  return uiMessages[key][lang];
 }
+
+/**
+ * Gets a localized message with culture parameter (defaults to 'tr' if not provided)
+ * @param key - The message key
+ * @param culture - The culture string (e.g., 'tr-TR', 'en-US')
+ * @returns The localized message string
+ */
+export function getMessageByCulture(key: UIMessageKey, culture?: string): string {
+  const lang = culture ? parseLocale(culture) : 'tr';
+  return getMessage(key, lang);
+}
+
+/**
+ * Creates a message getter function bound to a specific language
+ * @param lang - The target language
+ * @returns A function that takes a key and returns the localized message
+ */
+export function createMessageGetter(lang: Language): (key: UIMessageKey) => string {
+  return (key: UIMessageKey) => getMessage(key, lang);
+}
+
+/**
+ * Creates a message getter function bound to a specific culture
+ * @param culture - The culture string (e.g., 'tr-TR', 'en-US')
+ * @returns A function that takes a key and returns the localized message
+ */
+export function createMessageGetterByCulture(culture?: string): (key: UIMessageKey) => string {
+  const lang = culture ? parseLocale(culture) : 'tr';
+  return createMessageGetter(lang);
+}
+
+// Backward compatibility helpers
+// Note: No deprecated functions - use getMessage() instead
 
 export function getCurrencyCode(lang: Language): string {
   return lang === 'tr' ? 'TRY' : 'USD';
