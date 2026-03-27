@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
 import { cookies, headers } from "next/headers";
 import { isSupportedLanguage, getSupportedLanguage } from "@/lib/constants/language";
@@ -19,12 +19,13 @@ export const metadata: Metadata = {
   title: "byLiGG Fantazi Futbol",
   description:
     "Futbol maçlarını tahmin et, tam skoru bil, puan kazan ve liderlik tablosunda yüksel.",
-  viewport: {
-    width: 'device-width',
-    initialScale: 1,
-    maximumScale: 1,
-    userScalable: false,
-  },
+};
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
 };
 
 const themeInitScript = `
