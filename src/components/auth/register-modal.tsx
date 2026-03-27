@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { useI18n } from "@/providers/i18n-provider";
 import { useAuth } from "@/providers/auth-provider";
 import { apiClient } from "@/lib/api";
@@ -63,16 +63,19 @@ export function RegisterModal({ open, onClose, onSwitchToLogin }: RegisterModalP
 
   const firstInputRef = useRef<HTMLInputElement>(null);
 
-  const resetForm = () => {
+  const resetForm = useCallback(() => {
     setForm({ displayName: "", username: "", email: "", password: "", confirmPassword: "" });
     setErrors({});
     setLoading(false);
-  };
+    setShowPassword(false);
+    setShowConfirm(false);
+    setFocusedField(null);
+  }, []);
 
-  const onCloseInternal = () => {
+  const onCloseInternal = useCallback(() => {
     resetForm();
     onClose();
-  };
+  }, [resetForm, onClose]);
 
   useEffect(() => {
     if (!open) return;
@@ -82,10 +85,10 @@ export function RegisterModal({ open, onClose, onSwitchToLogin }: RegisterModalP
 
   useEffect(() => {
     if (!open) return;
-    const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") onClose(); };
+    const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") onCloseInternal(); };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [open, onClose]);
+  }, [open, onCloseInternal]);
 
   function validate(): FieldError {
     const e: FieldError = {};
@@ -158,7 +161,6 @@ export function RegisterModal({ open, onClose, onSwitchToLogin }: RegisterModalP
         setLoading(false);
       }
     } catch (error) {
-      // ApiClient already handles toast messages, but we still show inline error for form
       if (error instanceof Error) {
         setErrors({ general: error.message });
       } else {

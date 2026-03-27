@@ -1,6 +1,7 @@
 import { getCookie } from './utils';
-import { handleApiError } from './toast';
 import { Language, toLocale, parseLocale, getMessage } from '@/lib/constants/language';
+
+export const AUTH_TOKEN_COOKIE = 'byligg_token';
 
 export interface ApiResponse<T = unknown> {
   success: boolean;
@@ -16,6 +17,12 @@ export class ApiError extends Error {
   }
 }
 
+let onUnauthorized: (() => void) | null = null;
+
+export function setUnauthorizedHandler(handler: () => void): void {
+  onUnauthorized = handler;
+}
+
 class ApiClient {
   private baseUrl: string;
 
@@ -29,36 +36,29 @@ class ApiClient {
     lang?: Language
   ): Promise<T> {
     const maxRetries = 3;
-    const baseDelay = 1000; // 1 second
+    const baseDelay = 1000;
 
     for (let attempt = 0; attempt <= maxRetries; attempt++) {
       try {
         return await this.makeRequest<T>(endpoint, options, lang);
       } catch (error) {
-        const isRetryableError = this.isRetryableError(error);
         const isLastAttempt = attempt === maxRetries;
-
-        if (!isRetryableError || isLastAttempt) {
+        if (!this.isRetryableError(error) || isLastAttempt) {
           throw error;
         }
-
-        // Exponential backoff with jitter
         const delay = baseDelay * Math.pow(2, attempt) + Math.random() * 1000;
         await new Promise(resolve => setTimeout(resolve, delay));
       }
     }
 
-    // This should never be reached, but TypeScript requires it
     throw new Error('Unexpected retry logic error');
   }
 
   private isRetryableError(error: unknown): boolean {
     if (error instanceof ApiError) {
-      // Retry on network errors (status 0) and server errors (5xx)
       return error.status === 0 || (error.status >= 500 && error.status < 600);
     }
-    // Retry on network/fetch errors
-    return error instanceof TypeError || error instanceof Error;
+    return false;
   }
 
   private async makeRequest<T>(
@@ -68,9 +68,10 @@ class ApiClient {
   ): Promise<T> {
     const url = `${this.baseUrl}${endpoint}`;
 
-    const token = getCookie('byligg_token');
+    const token = getCookie(AUTH_TOKEN_COOKIE);
     const headers: Record<string, string> = {
       'Content-Type': 'application/json',
+      'X-Api-Key': process.env.NEXT_PUBLIC_API_KEY ?? '',
       ...options.headers as Record<string, string>,
     };
 
@@ -95,22 +96,21 @@ class ApiClient {
       if (!response.ok) {
         const errorData = (await response.json().catch(() => ({}))) as { message?: string };
 
-        let message = errorData.message || `HTTP ${response.status}`;
         const statusCode = response.status;
+        const fallbackMessages: Partial<Record<number, string>> = {
+          400: getMessage('invalidRequest', resolvedLang),
+          401: getMessage('sessionExpired', resolvedLang),
+          403: getMessage('permissionDenied', resolvedLang),
+          404: getMessage('resourceNotFound', resolvedLang),
+          500: getMessage('serverError', resolvedLang),
+        };
+        const message = errorData.message || fallbackMessages[statusCode] || `HTTP ${statusCode}`;
 
-        if (statusCode === 401 && typeof window !== 'undefined') {
-          document.cookie = 'byligg_token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT';
-          window.location.href = '/';
-          message = errorData.message || getMessage('sessionExpired', resolvedLang);
-        } else if (statusCode === 403) {
-          message = errorData.message || getMessage('permissionDenied', resolvedLang);
-        } else if (statusCode === 400) {
-          message = errorData.message || getMessage('invalidRequest', resolvedLang);
+        if (statusCode === 401) {
+          onUnauthorized?.();
         }
 
-        const error = new ApiError(statusCode, message);
-        handleApiError(error, resolvedLang);
-        throw error;
+        throw new ApiError(statusCode, message);
       }
 
       const data = (await response.json()) as unknown;
@@ -119,9 +119,7 @@ class ApiClient {
         const maybePayload = data as ApiResponse;
         if (typeof maybePayload.success === 'boolean' && !maybePayload.success) {
           const businessMessage = maybePayload.message || maybePayload.error || getMessage('businessRuleError', resolvedLang);
-          const businessError = new ApiError(400, businessMessage);
-          handleApiError(businessError, resolvedLang);
-          throw businessError;
+          throw new ApiError(400, businessMessage);
         }
       }
 
@@ -130,9 +128,7 @@ class ApiClient {
       if (error instanceof ApiError) {
         throw error;
       }
-      const networkError = new ApiError(0, getMessage('networkError', resolvedLang));
-      handleApiError(networkError, resolvedLang);
-      throw networkError;
+      throw new ApiError(0, getMessage('networkError', resolvedLang));
     }
   }
 

@@ -5,7 +5,6 @@ export interface Theme {
   name: { tr: string; en: string };
   accent: string;
   accentRgb: string;
-  /** Tailwind gradient classes for the swatch preview */
   swatch: string;
 }
 

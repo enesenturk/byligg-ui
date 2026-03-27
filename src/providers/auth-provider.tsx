@@ -1,12 +1,13 @@
 'use client';
 
-import { createContext, useContext, useState, type ReactNode } from 'react';
+import { createContext, useContext, useState, useEffect, useCallback, type ReactNode } from 'react';
 import { useRouter } from 'next/navigation';
-import { getCookie } from '@/lib/utils';
+import { getCookie, setCookie, deleteCookie } from '@/lib/utils';
+import { setUnauthorizedHandler, AUTH_TOKEN_COOKIE } from '@/lib/api';
+const TOKEN_MAX_AGE = 60 * 60 * 24 * 7; // 7 days
 
 interface AuthContextType {
   isAuthenticated: boolean | null;
-  isLoading: boolean;
   login: (token: string) => void;
   logout: () => void;
 }
@@ -16,30 +17,28 @@ const AuthContext = createContext<AuthContextType | null>(null);
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(() => {
     if (typeof window === 'undefined') return null;
-    return !!getCookie('byligg_token');
+    return !!getCookie(AUTH_TOKEN_COOKIE);
   });
-  const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
-  const login = (token: string) => {
-    setIsLoading(true);
-    const maxAge = 60 * 60 * 24 * 7; // 7 days
-    document.cookie = `byligg_token=${token}; path=/; max-age=${maxAge}; SameSite=Lax`;
-    setIsAuthenticated(true);
-    setIsLoading(false);
-    router.push('/dashboard');
-  };
-
-  const logout = () => {
-    setIsLoading(true);
-    document.cookie = 'byligg_token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT';
+  const logout = useCallback(() => {
+    deleteCookie(AUTH_TOKEN_COOKIE);
     setIsAuthenticated(false);
-    setIsLoading(false);
     router.push('/');
-  };
+  }, [router]);
+
+  const login = useCallback((token: string) => {
+    setCookie(AUTH_TOKEN_COOKIE, token, TOKEN_MAX_AGE);
+    setIsAuthenticated(true);
+    router.push('/dashboard');
+  }, [router]);
+
+  useEffect(() => {
+    setUnauthorizedHandler(logout);
+  }, [logout]);
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated, isLoading, login, logout }}>
+    <AuthContext.Provider value={{ isAuthenticated, login, logout }}>
       {children}
     </AuthContext.Provider>
   );

@@ -12,7 +12,6 @@ import { THEMES, DEFAULT_THEME, type ThemeId } from "@/lib/themes";
 interface ThemeCtx {
   theme: ThemeId;
   setTheme: (id: ThemeId) => void;
-  /** Hex color set after login from the user's favourite team */
   teamAccent: string | null;
   setTeamAccent: (hex: string | null) => void;
 }

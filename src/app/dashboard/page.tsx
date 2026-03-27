@@ -5,18 +5,14 @@ import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 
 export default function DashboardPage() {
-  const { isAuthenticated, isLoading, logout } = useAuth();
+  const { isAuthenticated, logout } = useAuth();
   const router = useRouter();
 
   useEffect(() => {
-    if (!isLoading && !isAuthenticated) {
+    if (isAuthenticated === false) {
       router.push('/');
     }
-  }, [isAuthenticated, isLoading, router]);
-
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
+  }, [isAuthenticated, router]);
 
   if (!isAuthenticated) {
     return null;

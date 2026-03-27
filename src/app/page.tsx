@@ -12,12 +12,13 @@ import { RegisterModal } from "@/components/auth/register-modal";
 
 export default function LandingPage() {
   const [registerOpen, setRegisterOpen] = useState(false);
+  const openRegister = () => setRegisterOpen(true);
 
   return (
     <>
-      <Navbar onOpenRegister={() => setRegisterOpen(true)} />
+      <Navbar onOpenRegister={openRegister} />
       <main>
-        <Hero onOpenRegister={() => setRegisterOpen(true)} />
+        <Hero onOpenRegister={openRegister} />
         <Features />
         <Matches />
         <LeaderboardPreview />

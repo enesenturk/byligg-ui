@@ -109,10 +109,6 @@ export interface Translations {
   };
   theme: {
     title: string;
-    emerald: string;
-    sapphire: string;
-    violet: string;
-    amber: string;
     teamColor: string;
     teamColorLocked: string;
   };
@@ -288,10 +284,6 @@ export const tr: Translations = {
   },
   theme: {
     title: "Tema",
-    emerald: "Yeşil Saha",
-    sapphire: "Safir Gece",
-    violet: "Mor Şampiyona",
-    amber: "Altın Kupa",
     teamColor: "Favori Takım",
     teamColorLocked: "Giriş yapınca açılır",
   },
@@ -467,10 +459,6 @@ export const en: Translations = {
   },
   theme: {
     title: "Theme",
-    emerald: "Green Pitch",
-    sapphire: "Sapphire Night",
-    violet: "Violet Champion",
-    amber: "Golden Cup",
     teamColor: "Favorite Team",
     teamColorLocked: "Login to unlock",
   },

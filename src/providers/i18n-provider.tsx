@@ -4,6 +4,7 @@ import {
   createContext,
   useContext,
   useState,
+  useEffect,
   type ReactNode,
 } from "react";
 import { tr, en, type Lang, type Translations } from "@/lib/i18n";
@@ -18,16 +19,16 @@ interface I18nCtx {
 const I18nContext = createContext<I18nCtx | null>(null);
 
 export function I18nProvider({ children }: { children: ReactNode }) {
-  const [lang, setLangState] = useState<Lang>(() => {
-    if (typeof window === 'undefined') {
-      return 'tr';
-    }
+  const [lang, setLangState] = useState<Lang>('tr');
+
+  useEffect(() => {
     const saved = localStorage.getItem('lx-lang') as Lang | null;
     if (saved && isSupportedLanguage(saved)) {
-      return saved;
+      setLangState(saved);
+      return;
     }
-    return parseLocale(navigator.language.toLowerCase());
-  });
+    setLangState(parseLocale(navigator.language.toLowerCase()));
+  }, []);
 
   const setLang = (l: Lang) => {
     setLangState(l);
