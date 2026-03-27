@@ -4,7 +4,7 @@ import { useState, useEffect, useRef } from "react";
 import { useI18n } from "@/providers/i18n-provider";
 import { useAuth } from "@/providers/auth-provider";
 import { apiClient } from "@/lib/api";
-import { getUiMessage } from "@/lib/constants/language";
+import { getMessage } from "@/lib/constants/language";
 import { LogoWordmark } from "@/components/brand/logo-wordmark";
 
 interface RegisterModalProps {
@@ -89,29 +89,29 @@ export function RegisterModal({ open, onClose, onSwitchToLogin }: RegisterModalP
 
   function validate(): FieldError {
     const e: FieldError = {};
-    if (!form.displayName.trim()) e.displayName = lang === "tr" ? "Görünen ad zorunlu" : "Display name is required";
+    if (!form.displayName.trim()) e.displayName = getMessage('displayNameRequired', lang);
     else if (form.displayName.trim().length < 2 || form.displayName.trim().length > 60)
-      e.displayName = lang === "tr" ? "2-60 karakter olmalı" : "Must be 2-60 characters";
+      e.displayName = getMessage('displayNameLength', lang);
 
-    if (!form.username.trim()) e.username = lang === "tr" ? "Kullanıcı adı zorunlu" : "Username is required";
+    if (!form.username.trim()) e.username = getMessage('usernameRequired', lang);
     else if (form.username.length < 3 || form.username.length > 30)
-      e.username = lang === "tr" ? "3-30 karakter olmalı" : "Must be 3-30 characters";
+      e.username = getMessage('usernameLength', lang);
     else if (!/^[a-zA-Z0-9_.]+$/.test(form.username))
-      e.username = lang === "tr" ? "Sadece harf, rakam, _ ve . kullanılabilir" : "Only letters, numbers, _ and . allowed";
+      e.username = getMessage('usernameInvalid', lang);
 
-    if (!form.email.trim()) e.email = lang === "tr" ? "E-posta zorunlu" : "Email is required";
+    if (!form.email.trim()) e.email = getMessage('emailRequired', lang);
     else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email))
-      e.email = lang === "tr" ? "Geçerli bir e-posta gir" : "Enter a valid email";
+      e.email = getMessage('emailInvalid', lang);
 
-    if (!form.password) e.password = lang === "tr" ? "Şifre zorunlu" : "Password is required";
+    if (!form.password) e.password = getMessage('passwordRequired', lang);
     else if (form.password.length < 6)
-      e.password = lang === "tr" ? "En az 6 karakter olmalı" : "Must be at least 6 characters";
+      e.password = getMessage('passwordLength', lang);
     else if (!/[a-zA-Z]/.test(form.password) || !/[0-9]/.test(form.password))
-      e.password = lang === "tr" ? "En az 1 harf ve 1 rakam içermeli" : "Must include at least 1 letter and 1 number";
+      e.password = getMessage('passwordComplexity', lang);
 
-    if (!form.confirmPassword) e.confirmPassword = lang === "tr" ? "Şifre tekrarı zorunlu" : "Please confirm your password";
+    if (!form.confirmPassword) e.confirmPassword = getMessage('confirmPasswordRequired', lang);
     else if (form.password !== form.confirmPassword)
-      e.confirmPassword = lang === "tr" ? "Şifreler eşleşmiyor" : "Passwords do not match";
+      e.confirmPassword = getMessage('passwordsNotMatch', lang);
 
     return e;
   }
@@ -154,7 +154,7 @@ export function RegisterModal({ open, onClose, onSwitchToLogin }: RegisterModalP
       if (token) {
         login(token);
       } else {
-        setErrors({ general: getUiMessage('tokenNotReceived', lang) });
+        setErrors({ general: getMessage('tokenNotReceived', lang) });
         setLoading(false);
       }
     } catch (error) {
@@ -162,7 +162,7 @@ export function RegisterModal({ open, onClose, onSwitchToLogin }: RegisterModalP
       if (error instanceof Error) {
         setErrors({ general: error.message });
       } else {
-        setErrors({ general: getUiMessage('serverConnectionFailed', lang) });
+        setErrors({ general: getMessage('serverConnectionFailed', lang) });
       }
       setLoading(false);
     }

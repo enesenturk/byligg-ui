@@ -1,6 +1,6 @@
 import { getCookie } from './utils';
 import { handleApiError } from './toast';
-import { Language, toLocale, parseLocale, getApiErrorMessage } from '@/lib/constants/language';
+import { Language, toLocale, parseLocale, getMessage } from '@/lib/constants/language';
 
 export interface ApiResponse<T = unknown> {
   success: boolean;
@@ -28,12 +28,50 @@ class ApiClient {
     options: RequestInit = {},
     lang?: Language
   ): Promise<T> {
+    const maxRetries = 3;
+    const baseDelay = 1000; // 1 second
+
+    for (let attempt = 0; attempt <= maxRetries; attempt++) {
+      try {
+        return await this.makeRequest<T>(endpoint, options, lang);
+      } catch (error) {
+        const isRetryableError = this.isRetryableError(error);
+        const isLastAttempt = attempt === maxRetries;
+
+        if (!isRetryableError || isLastAttempt) {
+          throw error;
+        }
+
+        // Exponential backoff with jitter
+        const delay = baseDelay * Math.pow(2, attempt) + Math.random() * 1000;
+        await new Promise(resolve => setTimeout(resolve, delay));
+      }
+    }
+
+    // This should never be reached, but TypeScript requires it
+    throw new Error('Unexpected retry logic error');
+  }
+
+  private isRetryableError(error: unknown): boolean {
+    if (error instanceof ApiError) {
+      // Retry on network errors (status 0) and server errors (5xx)
+      return error.status === 0 || (error.status >= 500 && error.status < 600);
+    }
+    // Retry on network/fetch errors
+    return error instanceof TypeError || error instanceof Error;
+  }
+
+  private async makeRequest<T>(
+    endpoint: string,
+    options: RequestInit = {},
+    lang?: Language
+  ): Promise<T> {
     const url = `${this.baseUrl}${endpoint}`;
 
     const token = getCookie('byligg_token');
-    const headers: HeadersInit = {
+    const headers: Record<string, string> = {
       'Content-Type': 'application/json',
-      ...options.headers,
+      ...options.headers as Record<string, string>,
     };
 
     if (token) {
@@ -63,11 +101,11 @@ class ApiClient {
         if (statusCode === 401 && typeof window !== 'undefined') {
           document.cookie = 'byligg_token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT';
           window.location.href = '/';
-          message = errorData.message || getApiErrorMessage('sessionExpired', resolvedLang);
+          message = errorData.message || getMessage('sessionExpired', resolvedLang);
         } else if (statusCode === 403) {
-          message = errorData.message || getApiErrorMessage('permissionDenied', resolvedLang);
+          message = errorData.message || getMessage('permissionDenied', resolvedLang);
         } else if (statusCode === 400) {
-          message = errorData.message || getApiErrorMessage('invalidRequest', resolvedLang);
+          message = errorData.message || getMessage('invalidRequest', resolvedLang);
         }
 
         const error = new ApiError(statusCode, message);
@@ -80,7 +118,7 @@ class ApiClient {
       if (data && typeof data === 'object') {
         const maybePayload = data as ApiResponse;
         if (typeof maybePayload.success === 'boolean' && !maybePayload.success) {
-          const businessMessage = maybePayload.message || maybePayload.error || getApiErrorMessage('businessRuleError', resolvedLang);
+          const businessMessage = maybePayload.message || maybePayload.error || getMessage('businessRuleError', resolvedLang);
           const businessError = new ApiError(400, businessMessage);
           handleApiError(businessError, resolvedLang);
           throw businessError;
@@ -92,7 +130,7 @@ class ApiClient {
       if (error instanceof ApiError) {
         throw error;
       }
-      const networkError = new ApiError(0, getApiErrorMessage('networkError', resolvedLang));
+      const networkError = new ApiError(0, getMessage('networkError', resolvedLang));
       handleApiError(networkError, resolvedLang);
       throw networkError;
     }

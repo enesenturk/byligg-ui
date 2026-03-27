@@ -39,7 +39,25 @@ export type UIMessageKey =
   | 'daysAgo'
   // General UI Messages
   | 'tokenNotReceived'
-  | 'serverConnectionFailed';
+  | 'serverConnectionFailed'
+  // Form Validation Messages
+  | 'displayNameRequired'
+  | 'displayNameLength'
+  | 'usernameRequired'
+  | 'usernameLength'
+  | 'usernameInvalid'
+  | 'emailRequired'
+  | 'emailInvalid'
+  | 'passwordRequired'
+  | 'passwordLength'
+  | 'passwordComplexity'
+  | 'confirmPasswordRequired'
+  | 'passwordsNotMatch'
+  // Navigation Messages
+  | 'navFeatures'
+  | 'navPricing'
+  | 'navAbout'
+  | 'navBlog';
 
 
 // Single source of truth for all UI messages
@@ -103,6 +121,72 @@ export const uiMessages: Record<UIMessageKey, Record<Language, string>> = {
     tr: 'Sunucuya bağlanılamadı',
     en: 'Could not connect to server',
   },
+  // Form Validation Messages
+  displayNameRequired: {
+    tr: 'Görünen ad zorunlu',
+    en: 'Display name is required',
+  },
+  displayNameLength: {
+    tr: '2-60 karakter olmalı',
+    en: 'Must be 2-60 characters',
+  },
+  usernameRequired: {
+    tr: 'Kullanıcı adı zorunlu',
+    en: 'Username is required',
+  },
+  usernameLength: {
+    tr: '3-30 karakter olmalı',
+    en: 'Must be 3-30 characters',
+  },
+  usernameInvalid: {
+    tr: 'Sadece harf, rakam, _ ve . kullanılabilir',
+    en: 'Only letters, numbers, _ and . allowed',
+  },
+  emailRequired: {
+    tr: 'E-posta zorunlu',
+    en: 'Email is required',
+  },
+  emailInvalid: {
+    tr: 'Geçerli bir e-posta gir',
+    en: 'Enter a valid email',
+  },
+  passwordRequired: {
+    tr: 'Şifre zorunlu',
+    en: 'Password is required',
+  },
+  passwordLength: {
+    tr: 'En az 6 karakter olmalı',
+    en: 'Must be at least 6 characters',
+  },
+  passwordComplexity: {
+    tr: 'En az 1 harf ve 1 rakam içermeli',
+    en: 'Must include at least 1 letter and 1 number',
+  },
+  confirmPasswordRequired: {
+    tr: 'Şifre tekrarı zorunlu',
+    en: 'Please confirm your password',
+  },
+  passwordsNotMatch: {
+    tr: 'Şifreler eşleşmiyor',
+    en: 'Passwords do not match',
+  },
+  // Navigation Messages
+  navFeatures: {
+    tr: 'Ürün',
+    en: 'Features',
+  },
+  navPricing: {
+    tr: 'Fiyatlandırma',
+    en: 'Pricing',
+  },
+  navAbout: {
+    tr: 'Hakkımızda',
+    en: 'About',
+  },
+  navBlog: {
+    tr: 'Blog',
+    en: 'Blog',
+  },
 };
 
 
@@ -145,9 +229,6 @@ export function createMessageGetterByCulture(culture?: string): (key: UIMessageK
   const lang = culture ? parseLocale(culture) : 'tr';
   return createMessageGetter(lang);
 }
-
-// Backward compatibility helpers
-// Note: No deprecated functions - use getMessage() instead
 
 export function getCurrencyCode(lang: Language): string {
   return lang === 'tr' ? 'TRY' : 'USD';

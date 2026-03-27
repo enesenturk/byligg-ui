@@ -3,16 +3,19 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { LogoWordmark } from "@/components/brand/logo-wordmark";
+import { useI18n } from "@/providers/i18n-provider";
+import { getMessage } from "@/lib/constants/language";
 
 const NAV_LINKS = [
-  { label: "Ürün", href: "#features" },
-  { label: "Fiyatlandırma", href: "#pricing" },
-  { label: "Hakkımızda", href: "#about" },
-  { label: "Blog", href: "#blog" },
+  { key: 'navFeatures' as const, href: "#features" },
+  { key: 'navPricing' as const, href: "#pricing" },
+  { key: 'navAbout' as const, href: "#about" },
+  { key: 'navBlog' as const, href: "#blog" },
 ];
 
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
+  const { lang } = useI18n();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
@@ -42,7 +45,7 @@ export function Navbar() {
                 href={link.href}
                 className="px-4 py-2 text-sm text-zinc-400 hover:text-white rounded-lg hover:bg-white/5 transition-colors"
               >
-                {link.label}
+                {getMessage(link.key, lang)}
               </a>
             </li>
           ))}
